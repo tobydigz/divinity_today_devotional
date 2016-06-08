@@ -18,6 +18,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 
 public class DevotionalGrid extends AppCompatActivity {
@@ -28,6 +33,8 @@ public class DevotionalGrid extends AppCompatActivity {
 //    private String titledev, datedev;
     private SwipeRefreshLayout swipeContainer;
     private ProgressDialog progressDialog;
+    private String[] Content, Id;
+
 
     @Override
     protected void onCreate(Bundle b){
@@ -55,8 +62,9 @@ public class DevotionalGrid extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), Reader.class);
                 i.putExtra("title", title);
                 i.putExtra("date", date);
-                i.putExtra("contentLoad", "a");
                 i.putExtra("position", position);
+                i.putExtra("content", Content[position]);
+                i.putExtra("id", Id[position]);
 
                 startActivity(i);
             }
@@ -82,6 +90,8 @@ public class DevotionalGrid extends AppCompatActivity {
 
 
         sendRequest();
+        Content = new String[listView.getCount()];
+        Id = new String[listView.getCount()];
 
     }
 
@@ -111,10 +121,31 @@ public class DevotionalGrid extends AppCompatActivity {
     private void showJSON(String json){
         pj = new ParseJSON(json);
         pj.parseJSON();
-        DevRowAdapter dv = new DevRowAdapter(this, ParseJSON.postTitle, ParseJSON.postDate);
+        DevRowAdapter dv = new DevRowAdapter(this, ParseJSON.postTitle, ParseJSON.postDate, ParseJSON.postContent, ParseJSON.postId, ParseJSON.num);
+        for(int i=0; i < listView.getCount(); i++)
+        {
 
+            Content[i] = ParseJSON.postContent[i];
+            Id[i]=ParseJSON.postId[i];
+        }
         listView.setAdapter(dv);
     }
+public void updateDb(String id, String title, String content, String date){
+    RealmConfiguration config = new RealmConfiguration.Builder(this)
+            .name("drop.taxi")
+            .schemaVersion(42)
+            .build();
+// Use the config
+    Realm realm = Realm.getInstance(config);
 
+    realm.beginTransaction();
+    Devotional devotional = realm.createObject(Devotional.class);
+    devotional.setID(id);
+    devotional.setTitle(title);
+    devotional.setContent(content);
+    devotional.setDate(date);
+    realm.commitTransaction();
+
+}
 
 }

@@ -8,14 +8,14 @@ import io.realm.RealmObject;
  */
 public class Devotional extends RealmObject {
 
-    int _id;
+    String _id;
     String _title;
     String _date;
     String _content;
 
     public Devotional(){}
 
-    public Devotional(int id, String title, String date, String content){
+    public Devotional(String id, String title, String date, String content){
         this._id = id;
         this._title = title;
         this._date = date;
@@ -28,11 +28,11 @@ public class Devotional extends RealmObject {
         this._content = content;
     }
 
-    public int getID(){
+    public String getID(){
         return this._id;
     }
 
-    public void setID(int id){
+    public void setID(String id){
         this._id = id;
     }
 

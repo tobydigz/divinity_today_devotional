@@ -11,13 +11,19 @@ public class DevRowAdapter extends ArrayAdapter<String> {
 
     private String[] postTitle;
     private String[] postDate;
+    private String[] postContent;
+    private String[] postId;
+    private Integer num;
     private Activity context;
 
-    public DevRowAdapter(Activity context, String[] postTitle, String[] postDate) {
+    public DevRowAdapter(Activity context, String[] postTitle, String[] postDate, String[] postContent, String [] postId, Integer num) {
         super(context, R.layout.devotionals_grid, postTitle);
         this.context = context;
         this.postTitle = postTitle;
         this.postDate = postDate;
+        this.postContent = postContent;
+        this.postId = postId;
+        this.num = num;
     }
 
     @Override

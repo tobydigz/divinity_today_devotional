@@ -54,7 +54,7 @@ public class Reader extends AppCompatActivity{
         Intent i = getIntent();
         title = i.getStringExtra("title");
         date = i.getStringExtra("date");
-        contentLoad = i.getStringExtra("contentLoad");
+        contentLoad = "c";
         id = Integer.valueOf(i.getStringExtra("position"));
         Log.d("title", title);
 
@@ -67,9 +67,8 @@ public class Reader extends AppCompatActivity{
 
         db = new DatabaseHandler(this);
 
-        if (contentLoad == "a"){
-            sendRequest();}
-        else if (contentLoad == "b"){
+
+         if (contentLoad == "b"){
             //TODO Check this syntax
             Devotional devotional = db.getDevotional(id);
             textContent.setText(devotional.getContent());
@@ -77,53 +76,6 @@ public class Reader extends AppCompatActivity{
 
     }
 
-    private void sendRequest(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        showJSON(response);
-                        Log.d(tag, response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Reader.this, "Check your internet connection", Toast.LENGTH_LONG).show();
-                        String error1 = error.toString();
-                        Log.d(tag, error1);
-                    }
-                })
-        {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                params.put("title", title);
-                params.put("date", date);
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "charset=utf-8");
-                return headers;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-//        requestQueue.add(postRequest);
-    }
-
-    private void showJSON(String json){
-        pj1 = new ParseJSON1(json);
-        pj1.parseJSON1();
-
-        content = Arrays.toString(ParseJSON1.postContent);
-//        textContent = (TextView) findViewById(R.id.readerContent);
-
-        textContent.setText(content);
-    }
 
 
     @Override

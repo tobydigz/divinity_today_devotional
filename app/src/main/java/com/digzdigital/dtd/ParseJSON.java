@@ -7,10 +7,13 @@ import org.json.JSONObject;
 public class ParseJSON {
     public static String[] postTitle;
     public static String[] postDate;
+    public static String[] postId;
+    public static String[] postContent;
+    public static Integer num;
 
-    public static final String JSON_ARRAY = "dev_array";
-    public static final String DEV_TITLE = "TITLE";
-    public static final String DEV_DATE = "DATE";
+//    public static final String JSON_ARRAY = "dev_array";
+//    public static final String DEV_TITLE = "TITLE";
+//    public static final String DEV_DATE = "DATE";
 
     private JSONArray content = null;
 
@@ -21,16 +24,23 @@ public class ParseJSON {
     protected void parseJSON(){
         JSONObject jsonObject = null;
         try {
-            jsonObject = new JSONObject(json);
-            content = jsonObject.getJSONArray(JSON_ARRAY);
+            content = new JSONArray(json);
+//            content = jsonObject.getJSONArray(JSON_ARRAY);
 
             postTitle = new String[content.length()];
             postDate = new String[content.length()];
+            postId = new String[content.length()];
+            postContent = new String[content.length()];
 
             for (int i=0; i<content.length();i++){
                 JSONObject jo = content.getJSONObject(i);
-                postTitle[i] = jo.getString(DEV_TITLE);
-                postDate[i] = jo.getString(DEV_DATE);
+                postId[i] = jo.getString("id");
+                JSONObject title = jo.getJSONObject("title");
+                postTitle[i] = title.getString("rendered");
+                postDate[i] = jo.getString("date");
+                JSONObject content = jo.getJSONObject("content");
+                postContent[i] = content.getString("rendered");
+                num = i;
             }
         } catch (JSONException e){
             e.printStackTrace();
