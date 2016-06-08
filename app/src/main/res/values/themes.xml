@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- the them applied to the application or activity -->
+    <style name="DivinityActionBarTheme"
+     	   parent="AppTheme">
+    </style>
+    
+    <color name="custom_theme_color">#212121</color>
+    <color name="DivinityMain">#2196F3</color>
+    <color name="Divinity1">#42a5f5</color>
+    <color name="Divinity2">#64b5f6</color>
+    <color name="Divinity3">#1565c0</color>
+    <color name="Divinity4">#1976d2</color>
+
+</resources>
