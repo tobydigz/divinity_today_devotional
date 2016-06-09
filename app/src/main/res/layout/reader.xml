@@ -7,15 +7,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/readerTitle"
-    android:text="@string/devTitle"/>
+    android:text="@string/devTitle"
+    android:textSize="30dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/readerDate"
         android:text="@string/devDate"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:textSize="30dp"/>
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/readerTitle">
     <TextView

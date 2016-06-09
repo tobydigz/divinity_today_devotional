@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.jsoup.Jsoup;
+
 public class DevRowAdapter extends ArrayAdapter<String> {
 
     private String[] postTitle;
@@ -33,9 +35,12 @@ public class DevRowAdapter extends ArrayAdapter<String> {
         TextView textTitle = (TextView) devGridItem.findViewById(R.id.dev_title);
         TextView textDate = (TextView) devGridItem.findViewById(R.id.dev_date);
 
-        textTitle.setText(postTitle[position]);
+        textTitle.setText(html2text(postTitle[position]));
         textDate.setText(postDate[position]);
 
         return devGridItem;
+    }
+    public static String html2text(String html) {
+        return Jsoup.parse(html).text();
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,8 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
+import org.jsoup.Jsoup;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -27,17 +27,20 @@ import io.realm.RealmConfiguration;
 
 public class DevotionalGrid extends AppCompatActivity {
 
-    private ListView listView;
-    private static final String JSON_URL = "http://divinitytodaydevotional.org/divinity_android.php";
+    private static final String JSON_URL = "http://divinitytodaydevotional.org/index.php/wp-json/wp/v2/posts";
     ParseJSON pj;
-//    private String titledev, datedev;
+    private ListView listView;
+    //    private String titledev, datedev;
     private SwipeRefreshLayout swipeContainer;
     private ProgressDialog progressDialog;
     private String[] Content, Id;
 
+    public static String html2text(String html) {
+        return Jsoup.parse(html).text();
+    }
 
     @Override
-    protected void onCreate(Bundle b){
+    protected void onCreate(Bundle b) {
         super.onCreate(b);
         setContentView(R.layout.devotionals_layout);
 
@@ -90,18 +93,18 @@ public class DevotionalGrid extends AppCompatActivity {
 
 
         sendRequest();
-        Content = new String[listView.getCount()];
-        Id = new String[listView.getCount()];
+
 
     }
 
-    private void sendRequest(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL,
+    private void sendRequest() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, JSON_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
                         showJSON(response);
+                        Log.d("digz", response);
 
                         swipeContainer.setRefreshing(false);
                     }
@@ -111,6 +114,7 @@ public class DevotionalGrid extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
                         Toast.makeText(DevotionalGrid.this, "Check your internet connection", Toast.LENGTH_LONG).show();
+                        Log.d("digz", error.toString());
                         swipeContainer.setRefreshing(false);
                     }
                 });
@@ -118,34 +122,20 @@ public class DevotionalGrid extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void showJSON(String json){
+    private void showJSON(String json) {
         pj = new ParseJSON(json);
         pj.parseJSON();
         DevRowAdapter dv = new DevRowAdapter(this, ParseJSON.postTitle, ParseJSON.postDate, ParseJSON.postContent, ParseJSON.postId, ParseJSON.num);
-        for(int i=0; i < listView.getCount(); i++)
-        {
 
-            Content[i] = ParseJSON.postContent[i];
-            Id[i]=ParseJSON.postId[i];
+        Content = new String[ParseJSON.num];
+        Id = new String[ParseJSON.num];
+        for (int i = 0; i < ParseJSON.num; i++) {
+            Content[i] = html2text(ParseJSON.postContent[i]);
+            Id[i] = ParseJSON.postId[i];
         }
         listView.setAdapter(dv);
     }
-public void updateDb(String id, String title, String content, String date){
-    RealmConfiguration config = new RealmConfiguration.Builder(this)
-            .name("drop.taxi")
-            .schemaVersion(42)
-            .build();
-// Use the config
-    Realm realm = Realm.getInstance(config);
 
-    realm.beginTransaction();
-    Devotional devotional = realm.createObject(Devotional.class);
-    devotional.setID(id);
-    devotional.setTitle(title);
-    devotional.setContent(content);
-    devotional.setDate(date);
-    realm.commitTransaction();
 
-}
 
 }

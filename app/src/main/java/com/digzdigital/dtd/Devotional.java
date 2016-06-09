@@ -1,6 +1,7 @@
 package com.digzdigital.dtd;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Digz on 09/02/2016.
@@ -8,15 +9,18 @@ import io.realm.RealmObject;
  */
 public class Devotional extends RealmObject {
 
-    String _id;
+    @PrimaryKey
+    int _id;
+
     String _title;
     String _date;
     String _content;
+    String _postId;
 
     public Devotional(){}
 
-    public Devotional(String id, String title, String date, String content){
-        this._id = id;
+    public Devotional(String _postId, String title, String date, String content){
+        this._postId = _postId;
         this._title = title;
         this._date = date;
         this._content = content;
@@ -28,11 +32,11 @@ public class Devotional extends RealmObject {
         this._content = content;
     }
 
-    public String getID(){
+    public Integer getID(){
         return this._id;
     }
 
-    public void setID(String id){
+    public void setID(Integer id){
         this._id = id;
     }
 
@@ -59,4 +63,7 @@ public class Devotional extends RealmObject {
     public void setContent(String content){
         this._content = content;
     }
+
+    public String getPostId(){return this._postId;}
+    public void setPostId(String postId){this._postId=postId;}
 }

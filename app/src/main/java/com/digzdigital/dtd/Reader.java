@@ -28,16 +28,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class Reader extends AppCompatActivity{
 
-    public static String title, content, contentLoad, date;
-    public static Integer id;
+    public static String id, title, content, contentLoad, date;
     private TextView textTitle, textDate, textContent;
     MenuItem mnu1;
-    String tag = "Lifecycle";
 
-    private static final String JSON_URL = "http://divinitytodaydevotional.org/divinity_android2.php";
-    private ParseJSON1 pj1;
 
     @Override
     public void onCreate(Bundle c){
@@ -53,7 +52,8 @@ public class Reader extends AppCompatActivity{
         Intent i = getIntent();
         title = i.getStringExtra("title");
         date = i.getStringExtra("date");
-        id = Integer.valueOf(i.getStringExtra("position"));
+        id = i.getStringExtra("id");
+        content=i.getStringExtra("content");
         Log.d("title", title);
 
         textTitle = (TextView) findViewById(R.id.readerTitle);
@@ -62,13 +62,8 @@ public class Reader extends AppCompatActivity{
         textDate = (TextView) findViewById(R.id.readerDate);
         textContent = (TextView) findViewById(R.id.readerContent);
         textDate.setText(date);
-
-
-
-
+        textContent.setText(content);
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -87,11 +82,29 @@ public class Reader extends AppCompatActivity{
     }
 
     private void saveDevotional(){
+        updateDb(id, title, content, date);
         SharedPreferences sharedPreferences = Reader.this.getSharedPreferences("divinity_devotional", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();
 
         //Shared preferences storing goes on here
         edit.putBoolean("anySaved", true);
         edit.commit();
+    }
+
+    public void updateDb(String id, String title, String content, String date) {
+        RealmConfiguration config = new RealmConfiguration.Builder(this)
+                .name("drop.taxi")
+                .schemaVersion(42)
+                .build();
+        // Use the config
+        Realm realm = Realm.getInstance(config);
+
+        realm.beginTransaction();
+        Devotional devotional = realm.createObject(Devotional.class);
+        devotional.setPostId(id);
+        devotional.setTitle(title);
+        devotional.setContent(content);
+        devotional.setDate(date);
+        realm.commitTransaction();
     }
 }
