@@ -38,7 +38,6 @@ public class Reader extends AppCompatActivity{
 
     private static final String JSON_URL = "http://divinitytodaydevotional.org/divinity_android2.php";
     private ParseJSON1 pj1;
-    private DatabaseHandler db;
 
     @Override
     public void onCreate(Bundle c){
@@ -54,7 +53,6 @@ public class Reader extends AppCompatActivity{
         Intent i = getIntent();
         title = i.getStringExtra("title");
         date = i.getStringExtra("date");
-        contentLoad = "c";
         id = Integer.valueOf(i.getStringExtra("position"));
         Log.d("title", title);
 
@@ -65,14 +63,8 @@ public class Reader extends AppCompatActivity{
         textContent = (TextView) findViewById(R.id.readerContent);
         textDate.setText(date);
 
-        db = new DatabaseHandler(this);
 
 
-         if (contentLoad == "b"){
-            //TODO Check this syntax
-            Devotional devotional = db.getDevotional(id);
-            textContent.setText(devotional.getContent());
-        }
 
     }
 
@@ -95,10 +87,6 @@ public class Reader extends AppCompatActivity{
     }
 
     private void saveDevotional(){
-//        title = textTitle.getText().toString();
-//        date = textDate.getText().toString();
-//        content = textContent.getText().toString();
-        db.addDevotional(new Devotional(title, date, content));
         SharedPreferences sharedPreferences = Reader.this.getSharedPreferences("divinity_devotional", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();
 

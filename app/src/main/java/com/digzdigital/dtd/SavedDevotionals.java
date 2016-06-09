@@ -27,20 +27,15 @@ public class SavedDevotionals extends AppCompatActivity{
 
         listView = (ListView) findViewById (R.id.devotionalsList);
 
-        DatabaseHandler db = new DatabaseHandler(this);
 
 //        List<Devotional> devotionals = db.getAllDevotionals();
 
 //        ArrayAdapter<Devotional> adapter = new ArrayAdapter<Devotional>(this, R.layout.devotionals_grid, devotionals);
 //        setListAdapter(adapter);
 
-        SQLiteDatabase db1 = db.getWritableDatabase();
 
-        Cursor devCursor = db1.rawQuery("SELECT id, title FROM devotional_post", null);
 
         ListView lvItems = (ListView) findViewById(R.id.devotionalsList);
-        DevotionalCursorAdapter devAdapter = new DevotionalCursorAdapter(this, devCursor);
-        lvItems.setAdapter(devAdapter);
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
