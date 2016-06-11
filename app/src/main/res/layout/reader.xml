@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="8dp">
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/readerTitle"
-    android:text="@string/devTitle"
-    android:textSize="30dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/readerDate"
-        android:text="@string/devDate"
-        android:layout_alignParentRight="true"
-        android:textSize="30dp"/>
-    <ScrollView
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/readerTitle">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/readerContent"
-        android:gravity="center"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        android:textSize="25dp"
-        />
-        <!--android:text="@string/devContent"-->
-    </ScrollView>
+        <TextView
+            android:id="@+id/readerDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/devDate"
+            android:textSize="25sp" />
+
+        <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/readerContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+
+                android:textSize="25sp" />
+            <!--android:text="@string/devContent"-->
+        <!--</ScrollView>-->
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

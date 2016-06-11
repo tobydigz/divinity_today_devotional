@@ -35,8 +35,8 @@ public class Home_activity extends Activity implements View.OnClickListener{
         /*ActionBar actionBar = getActionBar();
         actionBar.hide();*/
 
-        SharedPreferences sharedPreferences = getSharedPreferences("divinity_devotional", Context.MODE_PRIVATE);
-        anySaved = sharedPreferences.getBoolean("anySaved", false);
+//        SharedPreferences sharedPreferences = getSharedPreferences("divinity_devotional", Context.MODE_PRIVATE);
+//        anySaved = sharedPreferences.getBoolean("anySaved", false);
 
 
 
@@ -108,8 +108,7 @@ public class Home_activity extends Activity implements View.OnClickListener{
                 isInternetOn();
                 break;
             case R.id.saveFile:
-                if (anySaved){startActivity(new Intent("com.digzdigital.DivinityDevotionalSaved"));}
-                else{Toast.makeText(this, " No saved devotionals yet", Toast.LENGTH_LONG).show();}
+                startActivity(new Intent(getApplicationContext(), SavedDevotionals.class));
                 break;
         }
     }

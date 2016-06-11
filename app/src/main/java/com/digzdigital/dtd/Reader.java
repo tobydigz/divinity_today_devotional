@@ -2,12 +2,15 @@ package com.digzdigital.dtd;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 //import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextPaint;
 import android.util.Config;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +42,7 @@ public class Reader extends AppCompatActivity{
     MenuItem mnu1;
 
 
+
     @Override
     public void onCreate(Bundle c){
         super.onCreate(c);
@@ -46,7 +51,10 @@ public class Reader extends AppCompatActivity{
         setSupportActionBar(divinityBar);
 
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
+
 
 
         Intent i = getIntent();
@@ -56,8 +64,15 @@ public class Reader extends AppCompatActivity{
         content=i.getStringExtra("content");
         Log.d("title", title);
 
-        textTitle = (TextView) findViewById(R.id.readerTitle);
-        textTitle.setText(title);
+        CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        final Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/Nexa_Bold.otf");
+        if (collapsingToolbar != null) {
+            collapsingToolbar.setTitle(title);
+            collapsingToolbar.setCollapsedTitleTypeface(tf);
+            collapsingToolbar.setExpandedTitleTypeface(tf);
+        }
+
 
         textDate = (TextView) findViewById(R.id.readerDate);
         textContent = (TextView) findViewById(R.id.readerContent);
@@ -70,6 +85,12 @@ public class Reader extends AppCompatActivity{
         return MenuChoice(item);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.divinity_bar, menu);
+        return true;
+    }
     private boolean MenuChoice(MenuItem item) {
         switch (item.getItemId()) {
 
@@ -93,8 +114,8 @@ public class Reader extends AppCompatActivity{
 
     public void updateDb(String id, String title, String content, String date) {
         RealmConfiguration config = new RealmConfiguration.Builder(this)
-                .name("drop.taxi")
-                .schemaVersion(42)
+                .name("divinity.today")
+                .schemaVersion(1)
                 .build();
         // Use the config
         Realm realm = Realm.getInstance(config);
@@ -106,5 +127,6 @@ public class Reader extends AppCompatActivity{
         devotional.setContent(content);
         devotional.setDate(date);
         realm.commitTransaction();
+        Toast.makeText(this,"Devotional Saved", Toast.LENGTH_SHORT).show();
     }
 }

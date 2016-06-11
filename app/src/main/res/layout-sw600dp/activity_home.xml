@@ -19,8 +19,8 @@ tools:context="com.digzdigital.dtd.Home_activity">
     </com.google.android.gms.ads.AdView>
 
     <ImageView
-        android:layout_width="280dp"
-        android:layout_height="150dp"
+        android:layout_width="420dp"
+        android:layout_height="225dp"
         android:id="@+id/imageView1"
         android:src="@mipmap/divinity_launcher_7"
         android:layout_marginTop="89dp"
@@ -33,7 +33,7 @@ tools:context="com.digzdigital.dtd.Home_activity">
         android:layout_height="wrap_content"
         android:text="@string/welcome"
         android:id="@+id/textView1"
-        android:textSize="15sp"
+        android:textSize="25sp"
         android:alpha="0.87"
         android:layout_below="@+id/imageView1"
         android:layout_centerHorizontal="true"

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.safety.Whitelist;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -34,9 +37,23 @@ public class DevotionalGrid extends AppCompatActivity {
     private SwipeRefreshLayout swipeContainer;
     private ProgressDialog progressDialog;
     private String[] Content, Id;
+    TextView dbErrorHandle;
+    ImageView image;
 
     public static String html2text(String html) {
         return Jsoup.parse(html).text();
+    }
+    public static String html2ptesxt(String html){
+        Document document = Jsoup.parse(html);
+        document.outputSettings(new Document.OutputSettings().prettyPrint(false));//makes html() preserve linebreaks and spacing
+        document.select("br").append("\\n");
+        document.select("p").prepend("\\n\\n");
+
+        String s = document.html().replaceAll("\\\\n", "\n");
+
+        s = Jsoup.clean(s, "", Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
+        String st = s.replace("&nbsp;", "");
+        return st;
     }
 
     @Override
@@ -49,6 +66,9 @@ public class DevotionalGrid extends AppCompatActivity {
         progressDialog.setTitle("Loading");
         progressDialog.setMessage("Please wait...");
         progressDialog.show();
+
+        dbErrorHandle = (TextView) findViewById(R.id.dbErrorHandle);
+        image = (ImageView)findViewById(R.id.dropLogo);
 
 
         listView = (ListView) findViewById(R.id.devotionalsList);
@@ -103,6 +123,7 @@ public class DevotionalGrid extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
+                        if (listView.getVisibility() == View.GONE  )listView.setVisibility(View.VISIBLE);
                         showJSON(response);
                         Log.d("digz", response);
 
@@ -116,6 +137,9 @@ public class DevotionalGrid extends AppCompatActivity {
                         Toast.makeText(DevotionalGrid.this, "Check your internet connection", Toast.LENGTH_LONG).show();
                         Log.d("digz", error.toString());
                         swipeContainer.setRefreshing(false);
+                        dbErrorHandle.setVisibility(View.VISIBLE);
+                        image.setVisibility(View.VISIBLE);
+                        listView.setVisibility(View.GONE);
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -130,7 +154,7 @@ public class DevotionalGrid extends AppCompatActivity {
         Content = new String[ParseJSON.num];
         Id = new String[ParseJSON.num];
         for (int i = 0; i < ParseJSON.num; i++) {
-            Content[i] = html2text(ParseJSON.postContent[i]);
+            Content[i] = html2ptesxt(ParseJSON.postContent[i]);
             Id[i] = ParseJSON.postId[i];
         }
         listView.setAdapter(dv);

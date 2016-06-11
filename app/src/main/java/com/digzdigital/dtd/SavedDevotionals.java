@@ -1,61 +1,105 @@
 package com.digzdigital.dtd;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
+import org.w3c.dom.Text;
 
-/**
- * Created by Digz on 10/02/2016.
- */
-public class SavedDevotionals extends AppCompatActivity{
-    private Devotional devotional;
-    private ListView listView;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
+
+public class SavedDevotionals extends AppCompatActivity {
+
+    RealmResults<Devotional> devotionals;
+//    ArrayList<Booking> bookings;
+
+    devListAdapter devListAdapter;
+    RecyclerView devotionalListView;
+    TextView dbErrorHandle;
+    ImageView image;
 
     @Override
-    public void onCreate(Bundle a){
-        super.onCreate(a);
-        setContentView(R.layout.devotionals_layout);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.saved_layout);
 
-        listView = (ListView) findViewById (R.id.devotionalsList);
-
-
-//        List<Devotional> devotionals = db.getAllDevotionals();
-
-//        ArrayAdapter<Devotional> adapter = new ArrayAdapter<Devotional>(this, R.layout.devotionals_grid, devotionals);
-//        setListAdapter(adapter);
+        dbErrorHandle = (TextView)findViewById(R.id.dbErrorHandle);
+        image = (ImageView)findViewById(R.id.dropLogo);
+        devotionalListView = (RecyclerView) findViewById(R.id.devotionalsListdb);
 
 
-
-        ListView lvItems = (ListView) findViewById(R.id.devotionalsList);
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                TextView textView = (TextView) view.findViewById(R.id.dev_title);
-                TextView textView1 = (TextView) view.findViewById(R.id.dev_date);
-
-                String title = textView.getText().toString();
-                String date = textView1.getText().toString();
-
-                Intent i = new Intent(getApplicationContext(), Reader.class);
-                i.putExtra("title", title);
-                i.putExtra("date", date);
-                i.putExtra("contentLoad", "b");
-
-                startActivity(i);
-            }
-        });
-
+        devotionals = getDevotionals();
+        doRest(devotionals);
     }
+
+
+    public RealmResults<Devotional> getDevotionals() {
+        RealmConfiguration config = new RealmConfiguration.Builder(this)
+                .name("divinity.today")
+                .schemaVersion(1)
+                .build();
+// Use the config
+        Realm realm = Realm.getInstance(config);
+
+        realm.beginTransaction();
+        RealmQuery<Devotional> query = realm.where(Devotional.class);
+        RealmResults<Devotional> results = query.findAll();
+        realm.commitTransaction();
+        return results;
+    }
+
+    protected void doRest(RealmResults<Devotional> devList) {
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        devotionalListView.setLayoutManager(llm);
+
+
+        devotionals = devList;
+        if (devList != null) {
+            if (devList.size() != 0) {
+                devListAdapter = new devListAdapter(devList);
+                devotionalListView.setAdapter(devListAdapter);
+
+                devListAdapter.setOnItemClickListener(new devListAdapter.MyClickListener(){
+                    @Override
+                    public void onItemClick(int position, View v) {
+                        Devotional devotional = devotionals.get(position);
+                        String title = devotional.getTitle();
+                        String date = devotional.getDate();
+                        String content = devotional.getContent();
+                        String id = devotional.getPostId();
+                        Intent intent = new Intent(getApplicationContext(), Reader.class);
+                        intent.putExtra("title", title);
+                        intent.putExtra("date", date);
+                        intent.putExtra("id", id);
+                        intent.putExtra("content", content);
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                //TODO custom no bookings handling
+                dbErrorHandle.setVisibility(View.VISIBLE);
+                image.setVisibility(View.VISIBLE);
+            }
+        } else {dbErrorHandle.setVisibility(View.VISIBLE);
+            image.setVisibility(View.VISIBLE);}
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent(getApplicationContext(), Home_activity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+
 }
