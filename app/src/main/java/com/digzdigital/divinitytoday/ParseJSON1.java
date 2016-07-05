@@ -1,4 +1,4 @@
-package com.digzdigital.dtd;
+package com.digzdigital.divinitytoday;
 
 import org.json.JSONArray;
 import org.json.JSONException;

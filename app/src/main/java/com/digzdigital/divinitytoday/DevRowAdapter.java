@@ -1,4 +1,4 @@
-package com.digzdigital.dtd;
+package com.digzdigital.divinitytoday;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package com.digzdigital.dtd;
+package com.digzdigital.divinitytoday;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

@@ -1,4 +1,4 @@
-package com.digzdigital.dtd;
+package com.digzdigital.divinitytoday;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -64,7 +62,7 @@ public class SavedDevotionals extends AppCompatActivity {
         devotionals = devList;
         if (devList != null) {
             if (devList.size() != 0) {
-                devListAdapter = new devListAdapter(devList);
+                devListAdapter = new devListAdapter(devList, getApplicationContext());
                 devotionalListView.setAdapter(devListAdapter);
 
                 devListAdapter.setOnItemClickListener(new devListAdapter.MyClickListener(){

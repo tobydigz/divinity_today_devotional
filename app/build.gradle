@@ -3,14 +3,14 @@ apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.0"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.digzdigital.dtd"
+        applicationId "com.digzdigital.divinitytoday"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "2.0"
     }
     buildTypes {
         release {

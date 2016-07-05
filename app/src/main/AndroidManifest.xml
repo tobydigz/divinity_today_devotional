@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.digzdigital.dtd" >
+    package="com.digzdigital.divinitytoday" >
 
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -24,10 +24,10 @@
             android:value="@integer/google_play_services_version"/>
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".Home_activity"/>
+            android:value="com.digzdigital.divinitytoday.Home_activity"/>
 
         <activity
-            android:name=".Home_activity"
+            android:name="com.digzdigital.divinitytoday.Home_activity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +37,7 @@
         </activity>
 
         <activity
-            android:name=".DevotionalGrid"
+            android:name="com.digzdigital.divinitytoday.DevotionalGrid"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="com.digzdigital.DivinityDevotional" />
@@ -47,9 +47,9 @@
         </activity>
 
         <activity
-            android:name=".Reader"
+            android:name="com.digzdigital.divinitytoday.Reader"
             android:label="@string/app_name"
-            android:parentActivityName=".Home_activity">
+            android:parentActivityName="com.digzdigital.divinitytoday.Home_activity">
             <intent-filter>
                 <action android:name="com.digzdigital.DivinityDevotional.Reader" />
 
@@ -57,7 +57,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SavedDevotionals"
+        <activity android:name="com.digzdigital.divinitytoday.SavedDevotionals"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="com.digzdigital.DivinityDevotionalSaved"/>

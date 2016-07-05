@@ -1,4 +1,4 @@
-package com.digzdigital.dtd;
+package com.digzdigital.divinitytoday;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -24,30 +24,24 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-
 
 public class DevotionalGrid extends AppCompatActivity {
 
     private static final String JSON_URL = "http://divinitytodaydevotional.org/index.php/wp-json/wp/v2/posts";
     ParseJSON pj;
+    TextView dbErrorHandle;
+    ImageView image;
     private ListView listView;
     //    private String titledev, datedev;
     private SwipeRefreshLayout swipeContainer;
     private ProgressDialog progressDialog;
     private String[] Content, Id;
-    TextView dbErrorHandle;
-    ImageView image;
 
-    public static String html2text(String html) {
-        return Jsoup.parse(html).text();
-    }
-    public static String html2ptesxt(String html){
+    public static String html2ptesxt(String html) {
         Document document = Jsoup.parse(html);
         document.outputSettings(new Document.OutputSettings().prettyPrint(false));//makes html() preserve linebreaks and spacing
         document.select("br").append("\\n");
-        document.select("p").prepend("\\n\\n");
+        document.select("p").prepend("");
 
         String s = document.html().replaceAll("\\\\n", "\n");
 
@@ -68,7 +62,7 @@ public class DevotionalGrid extends AppCompatActivity {
         progressDialog.show();
 
         dbErrorHandle = (TextView) findViewById(R.id.dbErrorHandle);
-        image = (ImageView)findViewById(R.id.dropLogo);
+        image = (ImageView) findViewById(R.id.dropLogo);
 
 
         listView = (ListView) findViewById(R.id.devotionalsList);
@@ -123,7 +117,8 @@ public class DevotionalGrid extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
-                        if (listView.getVisibility() == View.GONE  )listView.setVisibility(View.VISIBLE);
+                        if (listView.getVisibility() == View.GONE)
+                            listView.setVisibility(View.VISIBLE);
                         showJSON(response);
                         Log.d("digz", response);
 
