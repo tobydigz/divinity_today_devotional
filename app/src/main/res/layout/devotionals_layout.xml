@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:id="@+id/swipeContainer">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/devotionalsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:listSelector="@drawable/list_selector"
         android:divider="@color/custom_theme_color"
         android:dividerHeight="1dp">
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
 
 

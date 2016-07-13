@@ -1,14 +1,13 @@
 package com.digzdigital.divinitytoday;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.content.Intent;
-//import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -16,20 +15,19 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class Reader extends AppCompatActivity{
+//import android.os.AsyncTask;
+
+public class Reader extends AppCompatActivity {
 
     public static String id, title, content, contentLoad, date;
-    private TextView textTitle, textDate, textContent;
     MenuItem mnu1;
-
-
+    private TextView textTitle, textDate, textContent;
 
     @Override
-    public void onCreate(Bundle c){
+    public void onCreate(Bundle c) {
         super.onCreate(c);
         this.setContentView(R.layout.reader_wrapper);
         Toolbar divinityBar = (Toolbar) findViewById(R.id.divinity_toolbar);
@@ -41,13 +39,17 @@ public class Reader extends AppCompatActivity{
         }
 
 
-
         Intent i = getIntent();
         title = i.getStringExtra("title");
         date = i.getStringExtra("date");
         id = i.getStringExtra("id");
-        content=i.getStringExtra("content");
-        Log.d("title", title);
+        //TODO use id to send new request
+//        if (i.getBooleanExtra("saved", false)) {
+//
+//        } else {
+            content = i.getStringExtra("content");
+            Log.d("title", title);
+//        }
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -77,18 +79,19 @@ public class Reader extends AppCompatActivity{
         getMenuInflater().inflate(R.menu.divinity_bar, menu);
         return true;
     }
+
     private boolean MenuChoice(MenuItem item) {
         switch (item.getItemId()) {
 
             case R.id.saveDevotional:
                 saveDevotional();
                 return true;
-           default:
-               return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
-    private void saveDevotional(){
+    private void saveDevotional() {
         updateDb(id, title, content, date);
         SharedPreferences sharedPreferences = Reader.this.getSharedPreferences("divinity_devotional", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();
@@ -113,6 +116,6 @@ public class Reader extends AppCompatActivity{
         devotional.setContent(content);
         devotional.setDate(date);
         realm.commitTransaction();
-        Toast.makeText(this,"Devotional Saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Devotional Saved", Toast.LENGTH_SHORT).show();
     }
 }

@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,22 +20,33 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+/*
+TODO refine api endpoint to leave out content
+TODO change to recyclerview and use new model for loaded devotionals plus objects
+TODO
+*/
 
 public class DevotionalGrid extends AppCompatActivity {
 
-    private static final String JSON_URL = "http://divinitytodaydevotional.org/index.php/wp-json/wp/v2/posts";
-    ParseJSON pj;
+    private static final String JSON_URL = "http://divinitytodaydevotional.org/index.php/wp-json/wp/v2/posts?per_page=5";//todo test this
+    ArrayList<Devotional> devotionals;
     TextView dbErrorHandle;
     ImageView image;
-    private ListView listView;
-    //    private String titledev, datedev;
+    RecyclerView rv;
+    DevRowAdapter devRowAdapter;
     private SwipeRefreshLayout swipeContainer;
     private ProgressDialog progressDialog;
-    private String[] Content, Id;
 
     public static String html2ptesxt(String html) {
         Document document = Jsoup.parse(html);
@@ -63,29 +74,8 @@ public class DevotionalGrid extends AppCompatActivity {
 
         dbErrorHandle = (TextView) findViewById(R.id.dbErrorHandle);
         image = (ImageView) findViewById(R.id.dropLogo);
-
-
-        listView = (ListView) findViewById(R.id.devotionalsList);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                TextView textView = (TextView) view.findViewById(R.id.dev_title);
-                TextView textView1 = (TextView) view.findViewById(R.id.dev_date);
-
-                String title = textView.getText().toString();
-                String date = textView1.getText().toString();
-
-                Intent i = new Intent(getApplicationContext(), Reader.class);
-                i.putExtra("title", title);
-                i.putExtra("date", date);
-                i.putExtra("position", position);
-                i.putExtra("content", Content[position]);
-                i.putExtra("id", Id[position]);
-
-                startActivity(i);
-            }
-        });
+        rv = (RecyclerView) findViewById(R.id.devotionalsList);
+        rv.setHasFixedSize(true);
 
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -117,8 +107,8 @@ public class DevotionalGrid extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
-                        if (listView.getVisibility() == View.GONE)
-                            listView.setVisibility(View.VISIBLE);
+//                        if (listView.getVisibility() == View.GONE)
+//                            listView.setVisibility(View.VISIBLE);
                         showJSON(response);
                         Log.d("digz", response);
 
@@ -134,7 +124,7 @@ public class DevotionalGrid extends AppCompatActivity {
                         swipeContainer.setRefreshing(false);
                         dbErrorHandle.setVisibility(View.VISIBLE);
                         image.setVisibility(View.VISIBLE);
-                        listView.setVisibility(View.GONE);
+//                        listView.setVisibility(View.GONE);
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -142,19 +132,86 @@ public class DevotionalGrid extends AppCompatActivity {
     }
 
     private void showJSON(String json) {
-        pj = new ParseJSON(json);
-        pj.parseJSON();
-        DevRowAdapter dv = new DevRowAdapter(this, ParseJSON.postTitle, ParseJSON.postDate, ParseJSON.postContent, ParseJSON.postId, ParseJSON.num);
+        devotionals = new ArrayList<>();
+        String[] postTitle;
+        String[] postDate;
+        String[] postId;
+        String[] postContent;
+        JSONObject jsonObject = null;
+        JSONArray content = null;
+        try {
+            content = new JSONArray(json);
 
-        Content = new String[ParseJSON.num];
-        Id = new String[ParseJSON.num];
-        for (int i = 0; i < ParseJSON.num; i++) {
-            Content[i] = html2ptesxt(ParseJSON.postContent[i]);
-            Id[i] = ParseJSON.postId[i];
+            postTitle = new String[content.length()];
+            postDate = new String[content.length()];
+            postId = new String[content.length()];
+            postContent = new String[content.length()];
+
+            for (int i = 0; i < content.length(); i++) {
+                JSONObject jo = content.getJSONObject(i);
+                postId[i] = jo.getString("id");
+                JSONObject title = jo.getJSONObject("title");
+                postTitle[i] = Jsoup.parse((title.getString("rendered"))).text();
+                postDate[i] = cleanDate(jo.getString("date"));
+                JSONObject content1 = jo.getJSONObject("content");
+                postContent[i] = html2ptesxt(content1.getString("rendered"));
+                devotionals.add(new Devotional(postId[i], postTitle[i], postDate[i], postContent[i]));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        listView.setAdapter(dv);
+        doRest(devotionals);
     }
 
+    public String cleanDate(String dateString) {
+        String dateString1 = dateString.replace("T", " ");
+        String dateString2 = dateString1.replace("-", "/");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date convertedDate = new Date();
+        try {
+            convertedDate = dateFormat.parse(dateString2);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
+        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", convertedDate);//Thursday
+        String stringMonth = (String) android.text.format.DateFormat.format("MMM", convertedDate); //Jun
+//        String intMonth = (String) android.text.format.DateFormat.format("MM", date); //06
+        String year = (String) android.text.format.DateFormat.format("yyyy", convertedDate); //2013
+        String day = (String) android.text.format.DateFormat.format("dd", convertedDate); //20
+        return dayOfTheWeek + " " + day + " " + stringMonth + " " + year;
+    }
 
+    protected void doRest(ArrayList<Devotional> devotionalList) {
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rv.setLayoutManager(llm);
+
+        devotionals = devotionalList;
+        if (devotionalList != null) {
+            if (devotionalList.size() != 0) {
+                devRowAdapter = new DevRowAdapter(devotionalList);
+                rv.setAdapter(devRowAdapter);
+
+                devRowAdapter.setOnItemClickListener(new DevRowAdapter.MyClickListener() {
+                    @Override
+                    public void onItemClick(int position, View v) {
+                        Devotional devotional = devotionals.get(position);
+                        String title = devotional.getTitle();
+                        String date = devotional.getDate();
+                        String content = devotional.getContent();
+                        String id = devotional.getPostId();
+                        Intent i = new Intent(getApplicationContext(), Reader.class);
+                        i.putExtra("title", title);
+                        i.putExtra("date", date);
+                        i.putExtra("content", content);
+                        i.putExtra("id", id);
+
+                        startActivity(i);
+                    }
+                });
+            }
+        }
+
+    }
 }

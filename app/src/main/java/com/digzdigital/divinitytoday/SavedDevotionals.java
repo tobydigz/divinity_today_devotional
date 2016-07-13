@@ -17,7 +17,6 @@ import io.realm.RealmResults;
 public class SavedDevotionals extends AppCompatActivity {
 
     RealmResults<Devotional> devotionals;
-//    ArrayList<Booking> bookings;
 
     devListAdapter devListAdapter;
     RecyclerView devotionalListView;
@@ -44,7 +43,7 @@ public class SavedDevotionals extends AppCompatActivity {
                 .name("divinity.today")
                 .schemaVersion(1)
                 .build();
-// Use the config
+        // Use the config
         Realm realm = Realm.getInstance(config);
 
         realm.beginTransaction();

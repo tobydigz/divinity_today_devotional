@@ -1,12 +1,12 @@
 package com.digzdigital.divinitytoday;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+        import org.json.JSONArray;
+        import org.json.JSONException;
+        import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+        import java.text.ParseException;
+        import java.text.SimpleDateFormat;
+        import java.util.Date;
 
 public class ParseJSON {
     public static String[] postTitle;
@@ -15,9 +15,6 @@ public class ParseJSON {
     public static String[] postContent;
     public static Integer num;
 
-//    public static final String JSON_ARRAY = "dev_array";
-//    public static final String DEV_TITLE = "TITLE";
-//    public static final String DEV_DATE = "DATE";
 
     private JSONArray content = null;
 
@@ -29,7 +26,6 @@ public class ParseJSON {
         JSONObject jsonObject = null;
         try {
             content = new JSONArray(json);
-//            content = jsonObject.getJSONArray(JSON_ARRAY);
 
             postTitle = new String[content.length()];
             postDate = new String[content.length()];
@@ -52,7 +48,7 @@ public class ParseJSON {
     }
     public String cleanDate(String dateString) {
         String dateString1 = dateString.replace("T", " ");
-       String dateString2 = dateString1.replace("-", "/");
+        String dateString2 = dateString1.replace("-", "/");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date convertedDate = new Date();
         try {
