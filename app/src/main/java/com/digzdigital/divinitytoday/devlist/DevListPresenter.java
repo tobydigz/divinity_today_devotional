@@ -81,7 +81,7 @@ public class DevListPresenter implements DevListContract.Presenter{
             view.doRest(globalDevotionals);
             return;
         }
-        view.addToList(getDevotional(endpoint));
+        view.doRest(getDevotional(endpoint));
 
     }
 

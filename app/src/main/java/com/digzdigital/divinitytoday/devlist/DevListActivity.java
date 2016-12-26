@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.digzdigital.divinitytoday.App;
 import com.digzdigital.divinitytoday.R;
 import com.digzdigital.divinitytoday.devlist.adapter.DevotionalAdapter;
 import com.digzdigital.divinitytoday.model.Devotional;
@@ -41,7 +42,7 @@ public class DevListActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle b) {
         super.onCreate(b);
         setContentView(R.layout.devotionals_layout);
-
+        ((App)getApplication()).getComponent().inject(this);
         //Progress bar
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Loading");

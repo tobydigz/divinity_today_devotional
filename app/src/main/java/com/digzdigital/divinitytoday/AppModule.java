@@ -1,5 +1,6 @@
 package com.digzdigital.divinitytoday;
 
+import com.digzdigital.divinitytoday.devlist.DevListPresenter;
 import com.digzdigital.divinitytoday.reader.ReaderPresenter;
 
 import javax.inject.Singleton;
@@ -16,5 +17,11 @@ public class AppModule {
     @Singleton
     public ReaderPresenter provideReaderPresenter(){
         return new ReaderPresenter();
+    }
+
+    @Provides
+    @Singleton
+    public DevListPresenter provideDevListPresenter(){
+        return new DevListPresenter();
     }
 }
