@@ -1,4 +1,4 @@
-package com.digzdigital.divinitytoday.activity;
+package com.digzdigital.divinitytoday.reader;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;

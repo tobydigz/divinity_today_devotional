@@ -1,4 +1,4 @@
-package com.digzdigital.divinitytoday.activity;
+package com.digzdigital.divinitytoday.home;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.digzdigital.divinitytoday.R;
+import com.digzdigital.divinitytoday.activity.SavedDevotionalsActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 

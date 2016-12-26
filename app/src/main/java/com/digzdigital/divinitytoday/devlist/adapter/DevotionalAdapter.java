@@ -1,15 +1,12 @@
-package com.digzdigital.divinitytoday.adapter;
+package com.digzdigital.divinitytoday.devlist.adapter;
 
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.digzdigital.divinitytoday.OnLoadMoreListener;
 import com.digzdigital.divinitytoday.R;
 import com.digzdigital.divinitytoday.model.Devotional;
 

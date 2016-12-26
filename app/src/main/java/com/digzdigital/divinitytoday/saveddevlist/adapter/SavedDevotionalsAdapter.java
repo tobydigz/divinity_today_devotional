@@ -1,4 +1,4 @@
-package com.digzdigital.divinitytoday.adapter;
+package com.digzdigital.divinitytoday.saveddevlist.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;

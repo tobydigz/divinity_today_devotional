@@ -1,4 +1,4 @@
-package com.digzdigital.divinitytoday.activity;
+package com.digzdigital.divinitytoday.saveddevlist;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.digzdigital.divinitytoday.home.HomeActivity;
 import com.digzdigital.divinitytoday.model.Devotional;
 import com.digzdigital.divinitytoday.R;
-import com.digzdigital.divinitytoday.adapter.SavedDevotionalsAdapter;
+import com.digzdigital.divinitytoday.devotionallist.adapter.SavedDevotionalsAdapter;
+import com.digzdigital.divinitytoday.reader.ReaderActivity;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -22,7 +24,7 @@ public class SavedDevotionalsActivity extends AppCompatActivity {
 
     RealmResults<Devotional> devotionals;
 
-    com.digzdigital.divinitytoday.adapter.SavedDevotionalsAdapter SavedDevotionalsAdapter;
+    SavedDevotionalsAdapter savedDevotionalsAdapter;
     RecyclerView devotionalListView;
     TextView dbErrorHandle;
     ImageView image;
@@ -66,10 +68,10 @@ public class SavedDevotionalsActivity extends AppCompatActivity {
         devotionals = devList;
         if (devList != null) {
             if (devList.size() != 0) {
-                SavedDevotionalsAdapter = new SavedDevotionalsAdapter(devList, getApplicationContext());
-                devotionalListView.setAdapter(SavedDevotionalsAdapter);
+                savedDevotionalsAdapter = new SavedDevotionalsAdapter(devList, getApplicationContext());
+                devotionalListView.setAdapter(savedDevotionalsAdapter);
 
-                SavedDevotionalsAdapter.setOnItemClickListener(new SavedDevotionalsAdapter.MyClickListener(){
+                savedDevotionalsAdapter.setOnItemClickListener(new SavedDevotionalsAdapter.MyClickListener(){
                     @Override
                     public void onItemClick(int position, View v) {
                         Devotional devotional = devotionals.get(position);
