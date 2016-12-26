@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.digzdigital.divinitytoday" >
+    package="com.digzdigital.divinitytoday">
 
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission
-        android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label=
-
-
-
-
-
-
-
-            "@string/app_name"
-        android:theme="@style/AppTheme" >
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.digzdigital.divinitytoday.Home_activity"/>
+            android:value="com.digzdigital.divinitytoday.activity.HomeActivity" />
 
         <activity
-            android:name="com.digzdigital.divinitytoday.Home_activity"
-            android:label="@string/app_name" >
+            android:name="com.digzdigital.divinitytoday.activity.HomeActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,8 +30,9 @@
         </activity>
 
         <activity
-            android:name="com.digzdigital.divinitytoday.DevotionalGrid"
-            android:label="@string/app_name" >
+            android:name="com.digzdigital.divinitytoday.activity.DevotionalListActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="com.digzdigital.DivinityDevotional" />
 
@@ -47,9 +41,8 @@
         </activity>
 
         <activity
-            android:name="com.digzdigital.divinitytoday.Reader"
-            android:label="@string/app_name"
-            android:parentActivityName="com.digzdigital.divinitytoday.Home_activity">
+            android:name="com.digzdigital.divinitytoday.activity.ReaderActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="com.digzdigital.DivinityDevotional.Reader" />
 
@@ -57,17 +50,20 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.digzdigital.divinitytoday.SavedDevotionals"
-            android:label="@string/app_name">
+        <activity
+            android:name="com.digzdigital.divinitytoday.activity.SavedDevotionalsActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance">
             <intent-filter>
-                <action android:name="com.digzdigital.DivinityDevotionalSaved"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.digzdigital.DivinityDevotionalSaved" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.google.android.gms.ads.AdActivity"
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:theme="@android:style/Theme.Translucent"/>
+            android:theme="@android:style/Theme.Translucent" />
     </application>
 
 </manifest>

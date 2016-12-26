@@ -8,7 +8,7 @@
     <string name="tryagain">Try Again</string>
     <string name="back">Home</string>
     <string name="error">Ensure you have a working internet connection</string>
-    <!--<string name="banner_ad_unit_id"> ca-app-pub-6610707566113750/6139858028</string>-->
+    <string name="banner_ad_unit_id"> ca-app-pub-6610707566113750/6139858028</string>
     <string name="welcome">DIVINITY TODAY DEVOTIONAL</string>
     <string name="dream">GOD\'S DREAM WORLD</string>
     <string name="test">test</string>
@@ -39,7 +39,7 @@
  </string>
 
     <!--Test id down below-->
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <!--<string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>-->
 
 
     <!--  Menu items -->

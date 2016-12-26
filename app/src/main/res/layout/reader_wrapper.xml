@@ -9,8 +9,8 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/detail_backdrop_height"
-        android:fitsSystemWindows="true"
         android:background="@color/DivinityMain"
+        android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -27,10 +27,10 @@
                 android:id="@+id/backdrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax"
-                android:src="@mipmap/divinty_today_banner3"/>
+                android:scaleType="centerCrop"
+                android:src="@mipmap/divinty_today_banner3"
+                app:layout_collapseMode="parallax" />
 
 
             <android.support.v7.widget.Toolbar
@@ -38,10 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
             <!--app:layout_scrollFlags="scroll|enterAlways"-->
-
-
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -49,4 +47,13 @@
 
     <include layout="@layout/reader" />
 
-</android.support.design.widget.CoordinatorLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/save_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:title="@string/savefile"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@mipmap/ic_save_black_48dp" />
+</android.support.design.widget.CoordinatorLayout><!--app:srcCompat="@android:drawable/ic_menu_save"-->
