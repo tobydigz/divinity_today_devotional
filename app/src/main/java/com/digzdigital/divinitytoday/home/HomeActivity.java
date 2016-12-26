@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.digzdigital.divinitytoday.R;
-import com.digzdigital.divinitytoday.activity.SavedDevotionalsActivity;
+import com.digzdigital.divinitytoday.saveddevlist.SavedDevotionalsActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 

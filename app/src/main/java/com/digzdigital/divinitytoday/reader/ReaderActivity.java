@@ -1,8 +1,6 @@
 package com.digzdigital.divinitytoday.reader;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -15,25 +13,32 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.digzdigital.divinitytoday.App;
 import com.digzdigital.divinitytoday.R;
 import com.digzdigital.divinitytoday.model.Devotional;
+
+import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 //import android.os.AsyncTask;
 
-public class ReaderActivity extends AppCompatActivity implements View.OnClickListener{
+public class ReaderActivity extends AppCompatActivity implements View.OnClickListener, ReaderContract.View {
 
-    private int id;
-    private Devotional devotional;
     private FloatingActionButton saveFab;
-    private TextView textContent;
+    private TextView textContent, textDate;
+
+    // TODO: 26/12/2016 remember to inject this
+    @Inject
+    public ReaderPresenter presenter;
+    private CollapsingToolbarLayout collapsingToolbar;
 
     @Override
     public void onCreate(Bundle c) {
         super.onCreate(c);
         this.setContentView(R.layout.reader_wrapper);
+        ((App)getApplication()).getComponent().inject(this);
         Toolbar divinityBar = (Toolbar) findViewById(R.id.divinity_toolbar);
         setSupportActionBar(divinityBar);
 
@@ -46,70 +51,72 @@ public class ReaderActivity extends AppCompatActivity implements View.OnClickLis
         Intent intent = getIntent();
 
         Bundle bundle = intent.getExtras();
-        devotional = bundle.getParcelable("devotional");
+        Devotional devotional = bundle.getParcelable("devotional");
+        presenter.setView(this, devotional);
+        presenter.loadDevotional();
 
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        final Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/Nexa_Bold.otf");
-        if (collapsingToolbar != null) {
-            collapsingToolbar.setTitle(devotional.getTitle());
-            collapsingToolbar.setCollapsedTitleTypeface(tf);
-            collapsingToolbar.setExpandedTitleTypeface(tf);
-        }
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
 
-        TextView textDate = (TextView) findViewById(R.id.readerDate);
-         textContent = (TextView) findViewById(R.id.readerContent);
+
+        textDate = (TextView) findViewById(R.id.readerDate);
+        textContent = (TextView) findViewById(R.id.readerContent);
         saveFab = (FloatingActionButton) findViewById(R.id.save_fab);
         //// TODO: 01/11/2016 make savefab white with pink background
         saveFab.setOnClickListener(this);
 
-        textDate.setTypeface(tf);
-        textDate.setText(devotional.getDate());
-        textContent.setText(devotional.getContent());
+
+
     }
 
-
-
-    private void saveDevotional() {
-        updateDb();
-        SharedPreferences sharedPreferences = ReaderActivity.this.getSharedPreferences("divinity_devotional", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-
-        //Shared preferences storing goes on here
-        edit.putBoolean("anySaved", true);
-        edit.commit();
+    @Override
+    public void onClick(View view) {
+        if (presenter.isSaved()) {
+            presenter.updateDb();
+            return;
+        }
+        Snackbar.make(textContent, "This Devotional is already saved", Snackbar.LENGTH_LONG).show();
     }
 
-    public void updateDb() {
+    @Override
+    public void displayTitle(String title) {
+        Typeface tf = createTypeface();
+        if (collapsingToolbar != null) {
+            collapsingToolbar.setTitle(title);
+            collapsingToolbar.setCollapsedTitleTypeface(tf);
+            collapsingToolbar.setExpandedTitleTypeface(tf);
+        }
+    }
+
+    private Typeface createTypeface(){
+        return Typeface.createFromAsset(this.getAssets(), "fonts/Nexa_Bold.otf");
+
+    }
+
+    @Override
+    public void displayDate(String date) {
+        textDate.setTypeface(createTypeface());
+        textDate.setText(date);
+    }
+
+    @Override
+    public void displayContent(String content) {
+        textContent.setText(content);
+    }
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public Realm getRealmInstance() {
         RealmConfiguration config = new RealmConfiguration.Builder(this)
                 .name("divinity.today")
                 .schemaVersion(1)
                 .build();
         // Use the config
-        Realm realm = Realm.getInstance(config);
-
-        realm.beginTransaction();
-        Devotional devotional = realm.createObject(Devotional.class);
-        devotional.setPostId(devotional.getPostId());
-        devotional.setTitle(devotional.getTitle());
-        devotional.setContent(devotional.getContent());
-        devotional.setDate(devotional.getDate());
-        devotional.setSaved(true);
-        realm.commitTransaction();
-        Toast.makeText(this, "Devotional Saved", Toast.LENGTH_SHORT).show();
-    }
-
-    private boolean isSaved() {
-        return devotional.isSaved();
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (!isSaved()){
-            saveDevotional();
-        }else {
-            Snackbar.make(textContent, "This Devotional is already saved", Snackbar.LENGTH_LONG).show();
-        }
+        return Realm.getInstance(config);
     }
 }

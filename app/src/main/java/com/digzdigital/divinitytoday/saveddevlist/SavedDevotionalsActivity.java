@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.digzdigital.divinitytoday.home.HomeActivity;
 import com.digzdigital.divinitytoday.model.Devotional;
 import com.digzdigital.divinitytoday.R;
-import com.digzdigital.divinitytoday.devotionallist.adapter.SavedDevotionalsAdapter;
 import com.digzdigital.divinitytoday.reader.ReaderActivity;
+import com.digzdigital.divinitytoday.saveddevlist.adapter.SavedDevotionalsAdapter;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
