@@ -43,11 +43,13 @@ public class DevListActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(b);
         setContentView(R.layout.devotionals_layout);
         ((App)getApplication()).getComponent().inject(this);
+        presenter.setView(this);
         //Progress bar
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Loading");
         progressDialog.setMessage("Please wait...");
-        progressDialog.show();
+        // progressDialog.show();
+
 
         loadMoreButton = (Button) findViewById(R.id.loadMoreButton);
         loadMoreButton.setOnClickListener(this);
@@ -63,6 +65,7 @@ public class DevListActivity extends AppCompatActivity implements View.OnClickLi
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
                 presenter.SetupRecycler(isLoaded, presenter.getDevSize());
+                swipeContainer.setRefreshing(false);
             }
         });
 
