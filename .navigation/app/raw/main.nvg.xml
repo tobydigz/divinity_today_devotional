@@ -14,7 +14,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.digzdigital.divinitytoday.home.HomeActivity"/>
+        className = "com.digzdigital.divinitytoday.ui.home.HomeActivity"/>
       <point      
         x = "1024"      
         y = "184"/>
