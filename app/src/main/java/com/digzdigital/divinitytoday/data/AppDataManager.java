@@ -2,6 +2,7 @@ package com.digzdigital.divinitytoday.data;
 
 import com.digzdigital.divinitytoday.DivinityTodayApp;
 import com.digzdigital.divinitytoday.data.db.DbHelper;
+import com.digzdigital.divinitytoday.data.model.Devotional;
 import com.digzdigital.divinitytoday.data.wp.WpHelper;
 
 import javax.inject.Inject;

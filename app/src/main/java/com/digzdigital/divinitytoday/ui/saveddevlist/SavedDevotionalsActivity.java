@@ -11,35 +11,44 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.digzdigital.divinitytoday.DivinityTodayApp;
 import com.digzdigital.divinitytoday.R;
-import com.digzdigital.divinitytoday.data.Devotional;
+import com.digzdigital.divinitytoday.data.model.Devotional;
 import com.digzdigital.divinitytoday.ui.home.HomeActivity;
 import com.digzdigital.divinitytoday.ui.reader.ReaderActivity;
 import com.digzdigital.divinitytoday.ui.saveddevlist.adapter.SavedDevotionalsAdapter;
 
 import java.util.ArrayList;
 
-public class SavedDevotionalsActivity extends AppCompatActivity {
+import javax.inject.Inject;
 
-    SavedDevotionalsAdapter savedDevotionalsAdapter;
-    RecyclerView devotionalListView;
-    TextView dbErrorHandle;
-    ImageView image;
-    ArrayList<Devotional> devotionals;
+public class SavedDevotionalsActivity extends AppCompatActivity implements SavedDevotionalsContract.View {
+
+    @Inject
+    public SavedDevotionalsPresenter presenter;
+    private SavedDevotionalsAdapter savedDevotionalsAdapter;
+    private RecyclerView devotionalListView;
+    private TextView dbErrorHandle;
+    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.saved_layout);
 
+
+        ((DivinityTodayApp) getApplication()).getAppComponent().inject(this);
+presenter.setView(this);
+
         dbErrorHandle = (TextView) findViewById(R.id.dbErrorHandle);
         image = (ImageView) findViewById(R.id.dropLogo);
         devotionalListView = (RecyclerView) findViewById(R.id.devotionalsListdb);
+        presenter.loadDevotionals();
 
     }
 
-
-    protected void doRest(final ArrayList<Devotional> devList) {
+    @Override
+    public void doRest(final ArrayList<Devotional> devList) {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         devotionalListView.setLayoutManager(llm);
 
@@ -48,7 +57,7 @@ public class SavedDevotionalsActivity extends AppCompatActivity {
             image.setVisibility(View.VISIBLE);
             return;
         }
-        savedDevotionalsAdapter = new SavedDevotionalsAdapter(devList, this);
+        savedDevotionalsAdapter = new SavedDevotionalsAdapter(devList);
         devotionalListView.setAdapter(savedDevotionalsAdapter);
 
         savedDevotionalsAdapter.setOnItemClickListener(new SavedDevotionalsAdapter.MyClickListener() {
@@ -67,13 +76,19 @@ public class SavedDevotionalsActivity extends AppCompatActivity {
             @Override
             public void onDeleteClicked(int position) {
                 Devotional devotional = devList.get(position);
-                showAlertDialog(devotional, position);
+                showAlertDialog(devotional);
             }
         });
 
     }
 
-    private void showAlertDialog(Devotional devotional, final int position) {
+    @Override
+    public void notifyAdapter(int position, int size) {
+        savedDevotionalsAdapter.notifyItemRemoved(position);
+        savedDevotionalsAdapter.notifyItemRangeChanged(position, size);
+    }
+
+    private void showAlertDialog(final Devotional devotional) {
         // TODO: 14/04/2017 come back here and add listener
         String title = "Delete Devotional";
         String accept = "Yes";
@@ -85,10 +100,8 @@ public class SavedDevotionalsActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //delete
-                        savedDevotionalsAdapter.notifyItemRemoved(position);
+                        presenter.deleteDevotionals(devotional);
 
-                        savedDevotionalsAdapter.notifyItemRangeChanged(position, devotionals.size());
                     }
                 });
         ad.setNegativeButton(reject,

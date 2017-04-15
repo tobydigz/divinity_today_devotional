@@ -1,6 +1,7 @@
 package com.digzdigital.divinitytoday.ui.home;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.digzdigital.divinitytoday.R;
+import com.digzdigital.divinitytoday.data.model.Devotional;
 import com.digzdigital.divinitytoday.ui.saveddevlist.SavedDevotionalsActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -25,22 +27,29 @@ public class HomeActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-//        final Button Save = (Button) findViewById(R.id.reader);
 
+        sharedPreferences = getSharedPreferences("dtd", Context.MODE_PRIVATE);
+        if (getFirstRun()){
+            setRunned();
+        }
         findViewById(R.id.reader).setOnClickListener(this);
         findViewById(R.id.saveFile).setOnClickListener(this);
-        /*ActionBar actionBar = getActionBar();
-        actionBar.hide();*/
-
-//        SharedPreferences sharedPreferences = getSharedPreferences("divinity_devotional", Context.MODE_PRIVATE);
-//        anySaved = sharedPreferences.getBoolean("anySaved", false);
-
 
 
         //ADView initialiser
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+    }
+
+    public boolean getFirstRun() {
+        return sharedPreferences.getBoolean("firstRun", true);
+    }
+
+    public void setRunned() {
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putBoolean("firstRun", false);
+        edit.commit();
     }
 
     public void onBackPressed() {

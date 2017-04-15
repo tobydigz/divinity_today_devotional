@@ -1,6 +1,6 @@
 package com.digzdigital.divinitytoday.ui.devlist;
 
-import com.digzdigital.divinitytoday.data.Devotional;
+import com.digzdigital.divinitytoday.data.model.Devotional;
 
 import java.util.ArrayList;
 

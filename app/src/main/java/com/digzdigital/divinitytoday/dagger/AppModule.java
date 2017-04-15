@@ -11,6 +11,7 @@ import com.digzdigital.divinitytoday.data.wp.AppWpHelper;
 import com.digzdigital.divinitytoday.data.wp.WpHelper;
 import com.digzdigital.divinitytoday.ui.devlist.DevListPresenter;
 import com.digzdigital.divinitytoday.ui.reader.ReaderPresenter;
+import com.digzdigital.divinitytoday.ui.saveddevlist.SavedDevotionalsPresenter;
 
 import javax.inject.Singleton;
 
@@ -59,5 +60,11 @@ public class AppModule {
     @Singleton
     public DevListPresenter provideDevListPresenter() {
         return new DevListPresenter();
+    }
+
+    @Provides
+    @Singleton
+    public SavedDevotionalsPresenter provideSavedDevsPresenter() {
+        return new SavedDevotionalsPresenter();
     }
 }

@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.digzdigital.divinitytoday.DivinityTodayApp;
 import com.digzdigital.divinitytoday.R;
-import com.digzdigital.divinitytoday.data.Devotional;
+import com.digzdigital.divinitytoday.data.model.Devotional;
 import com.digzdigital.divinitytoday.ui.devlist.adapter.DevotionalAdapter;
 import com.digzdigital.divinitytoday.ui.reader.ReaderActivity;
 

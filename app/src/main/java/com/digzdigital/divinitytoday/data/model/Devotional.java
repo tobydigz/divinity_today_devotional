@@ -1,14 +1,11 @@
-package com.digzdigital.divinitytoday.data;
+package com.digzdigital.divinitytoday.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Table;
 
-/**
- * Created by Digz on 09/02/2016.
- * Defining getters and setters
- */
 public class Devotional extends SugarRecord implements Parcelable {
 
 
@@ -26,33 +23,43 @@ public class Devotional extends SugarRecord implements Parcelable {
     private String title;
     private String date;
     private String content;
-    private int postId;
+    private Long id;
     private boolean isSaved;
 
     public Devotional() {
     }
 
-    public Devotional(int postId, String title, String date, String content, boolean isSaved) {
-        this.postId = postId;
+    public static Devotional init(){
+        Devotional devotional = new Devotional();
+        devotional.setTitle("");
+        devotional.setDate("");
+        devotional.setContent("");
+        devotional.setId(1L);
+        devotional.setSaved(false);
+        return  devotional;
+    }
+
+    /*public Devotional(Long id, String title, String date, String content, boolean isSaved) {
+        this.id = id;
         this.title = title;
         this.date = date;
         this.content = content;
         this.isSaved = isSaved;
-    }
+    }*/
 
     public Devotional(Parcel in) {
-        this.postId = in.readInt();
+        this.id = in.readLong();
         this.title = in.readString();
         this.date = in.readString();
         this.content = in.readString();
         this.isSaved = (in.readInt() != 0);
     }
 
-    public Devotional(String title, String date, String content) {
+    /*public Devotional(String title, String date, String content) {
         this.title = title;
         this.date = date;
         this.content = content;
-    }
+    }*/
 
     @Override
     public int describeContents() {
@@ -61,7 +68,7 @@ public class Devotional extends SugarRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(postId);
+        parcel.writeLong(id);
         parcel.writeString(title);
         parcel.writeString(date);
         parcel.writeString(content);
@@ -72,14 +79,9 @@ public class Devotional extends SugarRecord implements Parcelable {
     public boolean equals(Object object) {
         if (object instanceof Devotional) {
             Devotional toCompare = (Devotional) object;
-            return (this.postId==toCompare.getPostId());
+            return (this.id ==toCompare.getId());
         }
         return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return postId;
     }
 
     public String getTitle() {
@@ -106,12 +108,12 @@ public class Devotional extends SugarRecord implements Parcelable {
         this.content = content;
     }
 
-    public int getPostId() {
-        return this.postId;
+    public Long getId() {
+        return this.id;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
 

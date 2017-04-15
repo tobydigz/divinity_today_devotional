@@ -1,6 +1,4 @@
-package com.digzdigital.divinitytoday.ui.devlist;
-
-import android.util.Log;
+package com.digzdigital.divinitytoday.ui.saveddevlist;
 
 import com.digzdigital.divinitytoday.DivinityTodayApp;
 import com.digzdigital.divinitytoday.data.DataManager;
@@ -10,46 +8,52 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class DevListPresenter implements DevListContract.Presenter, DataManager.WpListener {
+/**
+ * Created by Digz on 14/04/2017.
+ */
 
+public class SavedDevotionalsPresenter implements SavedDevotionalsContract.Presenter, DataManager.DbListener {
     @Inject
     public DataManager dataManager;
-    private DevListActivity view;
     private ArrayList<Devotional> devotionals = new ArrayList<>();
+    private SavedDevotionalsActivity view;
 
-    public DevListPresenter() {
+    public SavedDevotionalsPresenter() {
         DivinityTodayApp.getInstance().getAppComponent().inject(this);
     }
 
     @Override
-    public void setView(DevListActivity view) {
+    public void setView(SavedDevotionalsActivity view) {
         this.view = view;
-        dataManager.setWpListener(this);
     }
 
     @Override
-    public void loadDevotionals(int endpoint) {
-        view.showProgressDialog();
-        dataManager.queryForOnlinePosts(endpoint);
+    public void loadDevotionals() {
+        dataManager.queryForPosts();
     }
 
     @Override
     public int getDevSize() {
-        if (devotionals == null) return 0;
         return devotionals.size();
     }
 
     @Override
+    public void deleteDevotionals(Devotional devotional) {
+        int position = devotionals.indexOf(devotional);
+        devotional.delete();
+        devotionals.remove(devotional);
+        int size = getDevSize();
+        view.notifyAdapter(position, size);
+    }
+
+    @Override
     public void onPostsLoaded(ArrayList<Devotional> devotionals) {
-        view.dismissProgressDialog();
-        this.devotionals.addAll(devotionals);
+        this.devotionals = devotionals;
         view.doRest(devotionals);
     }
 
     @Override
     public void onError(String error) {
-        view.dismissProgressDialog();
-        view.makeToast("Couldn't load Devotionals");
-        Log.d("digz", error);
+
     }
 }

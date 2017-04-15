@@ -1,8 +1,5 @@
 package com.digzdigital.divinitytoday.ui.saveddevlist.adapter;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,27 +8,18 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.digzdigital.divinitytoday.DivinityTodayApp;
 import com.digzdigital.divinitytoday.R;
-import com.digzdigital.divinitytoday.data.DataManager;
-import com.digzdigital.divinitytoday.data.Devotional;
+import com.digzdigital.divinitytoday.data.model.Devotional;
 
 import java.util.ArrayList;
-
-import javax.inject.Inject;
 
 public class SavedDevotionalsAdapter extends RecyclerView.Adapter<SavedDevotionalsAdapter.ViewHolder> {
     private static MyClickListener myClickListener;
     private static DeleteClickedListener deleteClickedListener;
-    @Inject
-    public DataManager dataManager;
     private ArrayList<Devotional> devotionals;
-    private Context context;
 
-    public SavedDevotionalsAdapter(ArrayList<Devotional> devotionals, Context context) {
+    public SavedDevotionalsAdapter(ArrayList<Devotional> devotionals) {
         this.devotionals = devotionals;
-        this.context = context;
-        DivinityTodayApp.getInstance().getAppComponent().inject(this);
     }
 
     public Devotional getItem(int position) {

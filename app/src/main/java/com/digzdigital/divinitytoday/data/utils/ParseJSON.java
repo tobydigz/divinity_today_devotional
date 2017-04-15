@@ -1,6 +1,6 @@
 package com.digzdigital.divinitytoday.data.utils;
 
-import com.digzdigital.divinitytoday.data.Devotional;
+import com.digzdigital.divinitytoday.data.model.Devotional;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,23 +35,27 @@ public class ParseJSON {
 
     public ArrayList<Devotional> createDev(String json) {
         ArrayList<Devotional> devotionals = new ArrayList<>();
-        String postTitle;
-        String postDate;
-        int postId;
-        String postContent;
-        JSONObject jsonObject = null;
-        JSONArray content = null;
         try {
-            content = new JSONArray(json);
+            JSONArray content = new JSONArray(json);
             for (int i = 0; i < content.length(); i++) {
                 JSONObject jo = content.getJSONObject(i);
-                postId = jo.getInt("id");
+
+                int postId = jo.getInt("id");
                 JSONObject title = jo.getJSONObject("title");
-                postTitle = Jsoup.parse((title.getString("rendered"))).text();
-                postDate = cleanDate(jo.getString("date"));
+                String  postTitle = Jsoup.parse((title.getString("rendered"))).text();
+                String postDate = cleanDate(jo.getString("date"));
                 JSONObject content1 = jo.getJSONObject("content");
-                postContent = html2ptesxt(content1.getString("rendered"));
-                devotionals.add(new Devotional(postId, postTitle, postDate, postContent, false));
+                String   postContent = html2ptesxt(content1.getString("rendered"));
+                Long longId = (long) postId;
+
+                Devotional devotional = new Devotional();
+                devotional.setId(longId);
+                devotional.setTitle(postTitle);
+                devotional.setDate(postDate);
+                devotional.setContent(postContent);
+                devotional.setSaved(false);
+
+                devotionals.add(devotional);
             }
         } catch (JSONException e) {
             e.printStackTrace();

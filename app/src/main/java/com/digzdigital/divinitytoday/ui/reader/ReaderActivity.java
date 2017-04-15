@@ -15,12 +15,9 @@ import android.widget.Toast;
 
 import com.digzdigital.divinitytoday.DivinityTodayApp;
 import com.digzdigital.divinitytoday.R;
-import com.digzdigital.divinitytoday.data.Devotional;
+import com.digzdigital.divinitytoday.data.model.Devotional;
 
 import javax.inject.Inject;
-
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 //import android.os.AsyncTask;
 
@@ -32,6 +29,7 @@ public class ReaderActivity extends AppCompatActivity implements View.OnClickLis
     private FloatingActionButton saveFab;
     private TextView textContent, textDate;
     private CollapsingToolbarLayout collapsingToolbar;
+    private Devotional devotional = new Devotional();
 
     @Override
     public void onCreate(Bundle c) {
@@ -50,17 +48,18 @@ public class ReaderActivity extends AppCompatActivity implements View.OnClickLis
         Intent intent = getIntent();
 
         Bundle bundle = intent.getExtras();
-        Devotional devotional = bundle.getParcelable("devotional");
+        devotional = bundle.getParcelable("devotional");
         presenter.setView(this);
-        presenter.loadDevotional();
 
+        displayTitle(devotional.getTitle());
+        displayDate(devotional.getDate());
+        displayContent(devotional.getContent());
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
 
         textDate = (TextView) findViewById(R.id.readerDate);
         textContent = (TextView) findViewById(R.id.readerContent);
         saveFab = (FloatingActionButton) findViewById(R.id.save_fab);
-        //// TODO: 01/11/2016 make savefab white with pink background
         saveFab.setOnClickListener(this);
 
 
@@ -68,11 +67,11 @@ public class ReaderActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        if (presenter.isSaved()) {
-            presenter.updateDb();
+        if (!devotional.isSaved()) {
+            presenter.saveDevotional(devotional);
             return;
         }
-        Snackbar.make(textContent, "This OnlineDevotional is already saved", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(textContent, "This Devotional is already saved", Snackbar.LENGTH_LONG).show();
     }
 
     @Override

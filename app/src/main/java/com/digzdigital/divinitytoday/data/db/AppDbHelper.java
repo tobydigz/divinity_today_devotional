@@ -1,9 +1,8 @@
 package com.digzdigital.divinitytoday.data.db;
 
-import com.digzdigital.divinitytoday.data.Devotional;
+import com.digzdigital.divinitytoday.data.model.Devotional;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class AppDbHelper implements DbHelper {
@@ -20,8 +19,8 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public void savePost(Devotional devotional) {
-        List<Devotional> savedDevotionals = Devotional.find(Devotional.class, "postId = ?", String.valueOf(devotional.getPostId()));
-        if (savedDevotionals.size() > 0) {
+        Devotional sugarDevotional = Devotional.findById(Devotional.class, devotional.getId());
+        if (sugarDevotional != null) {
             listener.onError("OnlineDevotional already saved");
             return;
         }
@@ -37,6 +36,7 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public void deletePost(Devotional devotional) {
-        devotional.delete();
+        Devotional sugarDevotional = Devotional.findById(Devotional.class, devotional.getId());
+        sugarDevotional.delete();
     }
 }

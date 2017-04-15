@@ -12,10 +12,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+
         <meta-data android:name="DATABASE" android:value="divinity_today.db" />
         <meta-data android:name="VERSION" android:value="1" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.digzdigital.divinitytoday.data.db.model" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.digzdigital.divinitytoday.data.model" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>

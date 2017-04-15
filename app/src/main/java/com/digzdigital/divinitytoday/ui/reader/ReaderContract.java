@@ -1,10 +1,7 @@
 package com.digzdigital.divinitytoday.ui.reader;
 
-import io.realm.Realm;
+import com.digzdigital.divinitytoday.data.model.Devotional;
 
-/**
- * Created by Digz on 26/12/2016.
- */
 
 public interface ReaderContract {
     interface View {
@@ -21,12 +18,9 @@ public interface ReaderContract {
 
     interface Presenter {
 
-        void updateDb();
-
-        boolean isSaved();
+        void saveDevotional(Devotional devotional);
 
         void setView(ReaderActivity view);
 
-        void loadDevotional();
     }
 }
