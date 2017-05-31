@@ -1,5 +1,6 @@
 package com.digzdigital.divinitytoday.dagger;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.digzdigital.divinitytoday.DivinityTodayApp;
@@ -20,15 +21,22 @@ import dagger.Provides;
 
 @Module
 public class AppModule {
-    private final DivinityTodayApp app;
+    private final Application app;
 
-    public AppModule(DivinityTodayApp app) {
+    public AppModule(Application app) {
         this.app = app;
+
     }
 
     @Provides
     @Singleton
     public Context providesContext() {
+      return app;
+    }
+
+    @Provides
+    @Singleton
+    public Application providesApplication() {
         return app;
     }
 
@@ -40,8 +48,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public WpHelper providesWpHelper(Context context) {
-        return new AppWpHelper(context);
+    public WpHelper providesWpHelper() {
+        return new AppWpHelper(app);
     }
 
     @Provides

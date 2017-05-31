@@ -4,22 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.digzdigital.divinitytoday.R;
-import com.digzdigital.divinitytoday.data.model.Devotional;
+import com.digzdigital.divinitytoday.ui.devlist.DevListActivity;
 import com.digzdigital.divinitytoday.ui.saveddevlist.SavedDevotionalsActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-public class HomeActivity extends Activity implements View.OnClickListener{
+public class HomeActivity extends Activity implements View.OnClickListener {
 
-    public boolean anySaved;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -27,14 +24,13 @@ public class HomeActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
         sharedPreferences = getSharedPreferences("dtd", Context.MODE_PRIVATE);
-        if (getFirstRun()){
+        if (getFirstRun()) {
             setRunned();
         }
+
         findViewById(R.id.reader).setOnClickListener(this);
         findViewById(R.id.saveFile).setOnClickListener(this);
-
 
         //ADView initialiser
         AdView mAdView = (AdView) findViewById(R.id.adView);
@@ -46,10 +42,10 @@ public class HomeActivity extends Activity implements View.OnClickListener{
         return sharedPreferences.getBoolean("firstRun", true);
     }
 
-    public void setRunned() {
+    public boolean setRunned() {
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putBoolean("firstRun", false);
-        edit.commit();
+        return edit.commit();
     }
 
     public void onBackPressed() {
@@ -79,42 +75,14 @@ public class HomeActivity extends Activity implements View.OnClickListener{
         return super.onOptionsItemSelected(item);
     }
 
-    public final boolean isInternetOn(){
-
-        // get Connectivity Manager object to check connection
-        ConnectivityManager connec =
-                (ConnectivityManager)getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
-
-        //Check for network connections
-        if ((connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED) ||
-                (connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING) ||
-                (connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING) ||
-                (connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED)) {
-
-            //if connected with internet
-            startActivity(new Intent("com.digzdigital.DivinityDevotional"));
-            Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
-            return true;
-
-        }else if(
-                connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
-                        connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED  ) {
-
-//            startActivity(new Intent("com.digzdigital.DivinityDevotionalerror"));
-            Toast.makeText(this, " Not Connected ", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return false;
-    }
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.reader:
-                isInternetOn();
+                startActivity(new Intent(this, DevListActivity.class));
                 break;
             case R.id.saveFile:
-                startActivity(new Intent(getApplicationContext(), SavedDevotionalsActivity.class));
+                startActivity(new Intent(this, SavedDevotionalsActivity.class));
                 break;
         }
     }

@@ -23,10 +23,9 @@ import javax.inject.Inject;
 
 public class ReaderActivity extends AppCompatActivity implements View.OnClickListener, ReaderContract.View {
 
-    // TODO: 26/12/2016 remember to inject this
+
     @Inject
     public ReaderPresenter presenter;
-    private FloatingActionButton saveFab;
     private TextView textContent, textDate;
     private CollapsingToolbarLayout collapsingToolbar;
     private Devotional devotional = new Devotional();
@@ -59,7 +58,7 @@ public class ReaderActivity extends AppCompatActivity implements View.OnClickLis
 
         textDate = (TextView) findViewById(R.id.readerDate);
         textContent = (TextView) findViewById(R.id.readerContent);
-        saveFab = (FloatingActionButton) findViewById(R.id.save_fab);
+        FloatingActionButton saveFab = (FloatingActionButton) findViewById(R.id.save_fab);
         saveFab.setOnClickListener(this);
 
 

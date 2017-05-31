@@ -39,31 +39,17 @@
             android:name=".ui.devlist.DevListActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance">
-            <intent-filter>
-                <action android:name="com.digzdigital.DivinityDevotional"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".ui.reader.ReaderActivity"
             android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="com.digzdigital.DivinityDevotional.Reader"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".ui.saveddevlist.SavedDevotionalsActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance">
-            <intent-filter>
-                <action android:name="com.digzdigital.DivinityDevotionalSaved"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
         </activity>
 
         <activity

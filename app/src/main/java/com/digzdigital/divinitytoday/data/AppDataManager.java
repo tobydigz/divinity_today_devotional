@@ -1,5 +1,7 @@
 package com.digzdigital.divinitytoday.data;
 
+import android.content.Context;
+
 import com.digzdigital.divinitytoday.DivinityTodayApp;
 import com.digzdigital.divinitytoday.data.db.DbHelper;
 import com.digzdigital.divinitytoday.data.model.Devotional;
@@ -9,8 +11,12 @@ import javax.inject.Inject;
 
 
 public class AppDataManager implements DataManager {
+
+    @SuppressWarnings("WeakerAccess")
     @Inject
     public WpHelper wpHelper;
+
+    @SuppressWarnings("WeakerAccess")
     @Inject
     public DbHelper dbHelper;
 
@@ -27,6 +33,11 @@ public class AppDataManager implements DataManager {
     @Override
     public void queryForOnlinePosts(int offset) {
         wpHelper.queryForOnlinePosts(offset);
+    }
+
+    @Override
+    public void provideContext(Context context) {
+        wpHelper.provideContext(context);
     }
 
     @Override

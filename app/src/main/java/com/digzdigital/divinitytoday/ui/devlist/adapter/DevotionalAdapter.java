@@ -74,13 +74,9 @@ public class DevotionalAdapter extends RecyclerView.Adapter<DevotionalAdapter.Vi
             itemView.setOnClickListener(this);
         }
 
-
         @Override
         public void onClick(View v) {
             myClickListener.onItemClick(getAdapterPosition(), v);
-
         }
-
     }
-
 }

@@ -8,11 +8,9 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-/**
- * Created by Digz on 14/04/2017.
- */
-
 public class SavedDevotionalsPresenter implements SavedDevotionalsContract.Presenter, DataManager.DbListener {
+
+    @SuppressWarnings("WeakerAccess")
     @Inject
     public DataManager dataManager;
     private ArrayList<Devotional> devotionals = new ArrayList<>();
@@ -25,6 +23,7 @@ public class SavedDevotionalsPresenter implements SavedDevotionalsContract.Prese
     @Override
     public void setView(SavedDevotionalsActivity view) {
         this.view = view;
+        dataManager.setDbListener(this);
     }
 
     @Override

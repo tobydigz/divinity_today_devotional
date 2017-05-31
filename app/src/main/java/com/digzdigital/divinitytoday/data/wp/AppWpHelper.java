@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 public class AppWpHelper implements WpHelper, Response.Listener<String>, Response.ErrorListener {
 
+    @SuppressWarnings("WeakerAccess")
     @Inject
     public ParseJSON parseJSON;
     private WpListener listener;
@@ -38,6 +39,11 @@ public class AppWpHelper implements WpHelper, Response.Listener<String>, Respons
         StringRequest stringRequest = new StringRequest(Request.Method.GET, JSON_URL, this, this);
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void provideContext(Context context) {
+        this.context = context;
     }
 
     @Override

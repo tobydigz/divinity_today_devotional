@@ -9,6 +9,7 @@ import javax.inject.Inject;
 public class ReaderPresenter implements ReaderContract.Presenter {
 
     private ReaderActivity view;
+    @SuppressWarnings("WeakerAccess")
     @Inject
     public DataManager dataManager;
 

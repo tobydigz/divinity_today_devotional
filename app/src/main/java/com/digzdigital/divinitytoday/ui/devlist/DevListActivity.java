@@ -26,16 +26,13 @@ TODO change to recyclerview and use new model for loaded devotionals plus object
 TODO
 */
 
-public class DevListActivity extends AppCompatActivity implements View.OnClickListener, DevListContract.View{
+public class DevListActivity extends AppCompatActivity implements View.OnClickListener, DevListContract.View {
 
     @Inject
     public DevListPresenter presenter;
-
     private RecyclerView rv;
     private SwipeRefreshLayout swipeContainer;
     private ProgressDialog progressDialog;
-    private boolean isLoaded = false;
-
 
 
     @Override
@@ -69,6 +66,7 @@ public class DevListActivity extends AppCompatActivity implements View.OnClickLi
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+        presenter.loadDevotionals(presenter.getDevSize());
     }
 
 

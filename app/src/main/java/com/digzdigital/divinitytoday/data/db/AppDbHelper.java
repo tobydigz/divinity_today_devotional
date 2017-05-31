@@ -21,7 +21,7 @@ public class AppDbHelper implements DbHelper {
     public void savePost(Devotional devotional) {
         Devotional sugarDevotional = Devotional.findById(Devotional.class, devotional.getId());
         if (sugarDevotional != null) {
-            listener.onError("OnlineDevotional already saved");
+            listener.onError("Devotional already saved");
             return;
         }
         devotional.save();
@@ -29,7 +29,8 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public void queryForPosts() {
-        ArrayList<Devotional> devotionals = new ArrayList<>(Devotional.listAll(Devotional.class));
+        ArrayList<Devotional> devotionals = new ArrayList<>();
+        devotionals.addAll(Devotional.listAll(Devotional.class));
         listener.onPostsLoaded(devotionals);
 
     }

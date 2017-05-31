@@ -25,6 +25,7 @@ public class DevListPresenter implements DevListContract.Presenter, DataManager.
     public void setView(DevListActivity view) {
         this.view = view;
         dataManager.setWpListener(this);
+        dataManager.provideContext(view.getApplicationContext());
     }
 
     @Override

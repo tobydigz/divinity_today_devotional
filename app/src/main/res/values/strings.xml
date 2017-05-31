@@ -8,7 +8,6 @@
     <string name="tryagain">Try Again</string>
     <string name="back">Home</string>
     <string name="error">Ensure you have a working internet connection</string>
-    <string name="banner_ad_unit_id"> ca-app-pub-6610707566113750/6139858028</string>
     <string name="welcome">DIVINITY TODAY DEVOTIONAL</string>
     <string name="dream">GOD\'S DREAM WORLD</string>
     <string name="test">test</string>
@@ -17,7 +16,7 @@
     <string name="savefile">Saved Devotionals</string>
     <string name="devTitle">Divinity Today Devotional</string>
     <string name="devDate">19th May 1995</string>
-    <string name="devContent"></string>
+    <string name="devContent"> </string>
 
     <string name="save">Saved Devotionals</string>
     <string name="dev1Content">Romans 8:17, ‘And if children, then heirs; heirs of God, and joint-heirs with Christ; if so be that we suffer with [him] , together.’ that we may be also glorified We are joint-heirs with Christ!
@@ -37,9 +36,11 @@
         John 20:17, Ephesians 1:17-19, Colossians 1:18, 1 John 3:1-2
 
  </string>
+    <!--Prod id-->
+    <!--<string name="banner_ad_unit_id"> ca-app-pub-6610707566113750/6139858028</string>-->
 
     <!--Test id down below-->
-    <!--<string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>-->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
 
     <!--  Menu items -->
