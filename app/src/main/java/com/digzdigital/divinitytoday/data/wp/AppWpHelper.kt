@@ -1,10 +1,10 @@
-package com.digzdigital.divinitytoday.data.wp.retrofit
+package com.digzdigital.divinitytoday.data.wp
 
 import com.digzdigital.divinitytoday.data.model.Devotional
-import com.digzdigital.divinitytoday.data.wp.WpHelper
+import com.digzdigital.divinitytoday.data.wp.network.RestApi
 import rx.Observable
 
-class AppWpHelper(private val api: RestApi):WpHelper {
+class AppWpHelper(private val api: RestApi): WpHelper {
     override fun getDevotionals(offset: String, per_page: String): Observable<List<Devotional>> {
         return Observable.create{
             subscriber ->

@@ -1,4 +1,4 @@
-package com.digzdigital.divinitytoday.data.wp.retrofit
+package com.digzdigital.divinitytoday.data.wp.network
 
 class RestApi() {
     private val divinityApi: DivinityApi
@@ -8,7 +8,7 @@ class RestApi() {
                 .addConverterFactory(retrofit2.converter.moshi.MoshiConverterFactory.create())
                 .build()
 
-        divinityApi = retrofit.create(com.digzdigital.divinitytoday.data.wp.DivinityApi::class.java)
+        divinityApi = retrofit.create(DivinityApi::class.java)
 
     }
 

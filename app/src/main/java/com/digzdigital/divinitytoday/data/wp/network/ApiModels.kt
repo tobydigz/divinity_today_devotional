@@ -1,4 +1,4 @@
-package com.digzdigital.divinitytoday.data.wp.retrofit
+package com.digzdigital.divinitytoday.data.wp.network
 
 class DevotionalObject(val id: String,
                        val date: String,

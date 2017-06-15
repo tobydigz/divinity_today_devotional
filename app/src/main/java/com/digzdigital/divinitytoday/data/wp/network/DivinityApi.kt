@@ -1,8 +1,12 @@
-package com.digzdigital.divinitytoday.data.wp.retrofit
+package com.digzdigital.divinitytoday.data.wp.network
+
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface DivinityApi{
-    @retrofit2.http.GET("/index.php/wp-json/wp/v2/posts")
-    fun getTop(@retrofit2.http.Query("offset") offset:String,
-               @retrofit2.http.Query("per_page") per_page:String): retrofit2.Call<List<DevotionalObject>>
+    @GET("/index.php/wp-json/wp/v2/posts")
+    fun getTop(@Query("offset") offset:String,
+               @Query("per_page") per_page:String): Call<List<DevotionalObject>>
 
 }
