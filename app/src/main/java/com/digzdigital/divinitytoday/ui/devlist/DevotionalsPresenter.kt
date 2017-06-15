@@ -1,19 +1,19 @@
 package com.digzdigital.divinitytoday.ui.devlist
 
+import android.util.Log
 import com.digzdigital.divinitytoday.data.DataManager
 import com.digzdigital.divinitytoday.data.model.Devotional
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 
-class DevotionalsPresenter(val dataManager: DataManager): DevListContract.Presenter {
+class DevotionalsPresenter(val dataManager: DataManager) : DevListContract.Presenter {
+
     lateinit var view: DevListContract.View
     private val devotionals = ArrayList<Devotional>()
 
-    protected var subscriptions:CompositeSubscription
-    init {
-        subscriptions = CompositeSubscription()
-    }
+    private var subscriptions: CompositeSubscription = CompositeSubscription()
+
     override fun onAttach(view: DevListContract.View) {
         this.view = view
     }
@@ -23,18 +23,52 @@ class DevotionalsPresenter(val dataManager: DataManager): DevListContract.Presen
     }
 
 
-
     override fun loadDevotionals(endpoint: Int) {
-        view.showProgressDialog()
         val subscription = dataManager.getDevotionals(offset = devSize)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnCompleted { view.dismissProgressDialog() }
+                .doOnError({ error ->
+                    view.dismissProgressDialog()
+                    Log.d("DigzApp", "error getting devotionals ${error.message}")
+                })
                 .subscribe(
                         {
                             retrievedDevotionals ->
-                            devotionals.addAll(retrievedDevotionals)
+
                             view.dismissProgressDialog()
-                            view.showDevotionals(devotionals)
+
+                            if (retrievedDevotionals.isEmpty()){
+                                view.makeToast("Try loading again")
+                            }else{
+                                devotionals.addAll(retrievedDevotionals)
+                                view.showDevotionals(retrievedDevotionals as ArrayList<Devotional>)
+                            }
+                        }
+                )
+        subscriptions.add(subscription)
+    }
+
+    override fun reloadDevotionals(endpoint: Int) {
+        val subscription = dataManager.getDevotionals(offset = "0")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnCompleted { view.dismissSwipeRefresher() }
+                .doOnError({ error ->
+                    view.dismissSwipeRefresher()
+                    Log.d("DigzApp", "error getting devotionals ${error.message}")
+                })
+                .subscribe(
+                        {
+                            retrievedDevotionals ->
+                            view.dismissSwipeRefresher()
+
+                            if (retrievedDevotionals.isEmpty())view.makeToast("Try loading again")
+                            else{
+                                devotionals.clear()
+                                devotionals.addAll(retrievedDevotionals)
+                                view.reShowDevotionals(retrievedDevotionals as ArrayList<Devotional>)
+                            }
                         }
                 )
         subscriptions.add(subscription)
@@ -42,4 +76,8 @@ class DevotionalsPresenter(val dataManager: DataManager): DevListContract.Presen
 
     override val devSize: String
         get() = devotionals.size.toString()
+
+    override fun showDevotionals() {
+        view.showDevotionals(devotionals)
+    }
 }

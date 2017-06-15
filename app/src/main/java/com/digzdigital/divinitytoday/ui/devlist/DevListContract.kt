@@ -9,11 +9,15 @@ interface DevListContract {
 
         fun showDevotionals(devotionals: ArrayList<Devotional>)
 
+        fun reShowDevotionals(devotionals: ArrayList<Devotional>)
+
         fun showProgressDialog()
 
         fun dismissProgressDialog()
 
         fun makeToast(message: String)
+
+        fun dismissSwipeRefresher()
 
     }
 
@@ -21,7 +25,11 @@ interface DevListContract {
 
         fun loadDevotionals(endpoint: Int=0)
 
+        fun reloadDevotionals(endpoint: Int=0)
+
         val devSize: String
+
+        fun showDevotionals()
 
     }
 }

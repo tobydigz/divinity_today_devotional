@@ -5,10 +5,11 @@ import android.app.Application;
 import com.digzdigital.divinitytoday.dagger.AppComponent;
 import com.digzdigital.divinitytoday.dagger.AppModule;
 import com.digzdigital.divinitytoday.dagger.DaggerAppComponent;
-import com.orm.SugarApp;
+
+import io.paperdb.Paper;
 
 
-public class DivinityTodayApp extends SugarApp {
+public class DivinityTodayApp extends Application {
 
     private static DivinityTodayApp instance = new DivinityTodayApp();
     private AppComponent appComponent;
@@ -19,6 +20,7 @@ public class DivinityTodayApp extends SugarApp {
     @Override
     public void onCreate() {
         super.onCreate();
+        Paper.init(this);
         getAppComponent();
     }
 

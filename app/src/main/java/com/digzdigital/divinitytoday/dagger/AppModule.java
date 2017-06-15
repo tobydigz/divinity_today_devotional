@@ -10,9 +10,12 @@ import com.digzdigital.divinitytoday.data.db.PaperDbHelper;
 import com.digzdigital.divinitytoday.data.wp.AppWpHelper;
 import com.digzdigital.divinitytoday.data.wp.WpHelper;
 import com.digzdigital.divinitytoday.data.wp.network.RestApi;
+import com.digzdigital.divinitytoday.ui.devlist.DevListContract;
 import com.digzdigital.divinitytoday.ui.devlist.DevotionalsPresenter;
+import com.digzdigital.divinitytoday.ui.reader.ReaderContract;
 import com.digzdigital.divinitytoday.ui.reader.ReaderPresenter;
-import com.digzdigital.divinitytoday.ui.saveddevlist.SavedDevotionalsPresenter;
+import com.digzdigital.divinitytoday.ui.saveddevlist.SavedDevotionalContract;
+import com.digzdigital.divinitytoday.ui.saveddevlist.SavedDevotionalPresenter;
 
 import javax.inject.Singleton;
 
@@ -66,19 +69,19 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public ReaderPresenter provideReaderPresenter() {
-        return new ReaderPresenter();
+    public ReaderContract.Presenter provideReaderPresenter(DataManager dataManager) {
+        return new ReaderPresenter(dataManager);
     }
 
     @Provides
     @Singleton
-    public DevotionalsPresenter provideDevListPresenter(DataManager dataManager) {
+    public DevListContract.Presenter provideDevListPresenter(DataManager dataManager) {
         return new DevotionalsPresenter(dataManager);
     }
 
     @Provides
     @Singleton
-    public SavedDevotionalsPresenter provideSavedDevsPresenter() {
-        return new SavedDevotionalsPresenter();
+    public SavedDevotionalContract.Presenter provideSavedDevsPresenter(DataManager dataManager) {
+        return new SavedDevotionalPresenter(dataManager);
     }
 }

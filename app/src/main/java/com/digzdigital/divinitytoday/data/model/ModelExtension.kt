@@ -10,7 +10,7 @@ fun Devotional.getFormattedDate(): String {
     val dateString1 = date.replace("T", " ")
     val dateString2 = dateString1.replace("-", "/")
     val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-    var convertedDate = dateFormat.parse(dateString2)
+    val convertedDate = dateFormat.parse(dateString2)
 
     val dayOfTheWeek = android.text.format.DateFormat.format("EEEE", convertedDate) as String//Thursday
     val stringMonth = android.text.format.DateFormat.format("MMM", convertedDate) as String //Jun
@@ -22,7 +22,7 @@ fun Devotional.getFormattedDate(): String {
 
 fun Devotional.getCleanedTitle(): String = Jsoup.parse(title).text()
 
-fun Devotional.getCleanContent(): String {
+fun Devotional.getCleanedContent(): String {
     val document = Jsoup.parse(content)
     document.outputSettings(Document.OutputSettings().prettyPrint(false))//makes html() preserve linebreaks and spacing
     document.select("br").append("\\n")

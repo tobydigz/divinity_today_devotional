@@ -1,9 +1,6 @@
 package com.digzdigital.divinitytoday.ui.home
 
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
-import android.view.View
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -15,8 +12,13 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import com.digzdigital.divinitytoday.R
+import com.digzdigital.divinitytoday.commons.OnDevotionalSelectedListener
+import com.digzdigital.divinitytoday.data.model.Devotional
+import com.digzdigital.divinitytoday.ui.devlist.DevotionalsFragment
+import com.digzdigital.divinitytoday.ui.reader.ReaderFragment
+import com.digzdigital.divinitytoday.ui.saveddevlist.SavedDevotionalFragment
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnDevotionalSelectedListener {
 
     lateinit var fragmentManager: FragmentManager
 
@@ -52,7 +54,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
-    fun switchFragment(fragment:Fragment){
+
+    fun switchFragment(fragment: Fragment) {
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, fragment)
                 .commit()
@@ -63,7 +66,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
-
 
         if (id == R.id.action_settings) {
             return true
@@ -76,22 +78,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         val id = item.itemId
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_online) {
+            switchFragment(DevotionalsFragment())
+        } else if (id == R.id.nav_saved) {
+            switchFragment(SavedDevotionalFragment())
         }
-
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onDevotionalSelected(devotional: Devotional, isOnline:Boolean) {
+//        Toast.makeText(this, "${devotional.title} is selected", Toast.LENGTH_SHORT).show()
+         val fragment = ReaderFragment.newInstance(devotional, isOnline)
+         fragmentManager.beginTransaction()
+                 .replace(R.id.content_frame, fragment)
+                 .addToBackStack(null)
+                 .commit()
     }
 }

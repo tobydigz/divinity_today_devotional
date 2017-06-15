@@ -1,9 +1,9 @@
 package com.digzdigital.divinitytoday.ui.devlist.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import android.view.ViewGroup
 import com.digzdigital.divinitytoday.R
+import com.digzdigital.divinitytoday.commons.MyClickListener
 import com.digzdigital.divinitytoday.commons.adapter.ViewType
 import com.digzdigital.divinitytoday.commons.adapter.ViewTypeDelegateAdapter
 import com.digzdigital.divinitytoday.data.model.Devotional

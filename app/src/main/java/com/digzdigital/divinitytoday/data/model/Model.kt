@@ -5,6 +5,25 @@ import android.os.Parcelable
 import com.digzdigital.divinitytoday.commons.adapter.AdapterConstants
 import com.digzdigital.divinitytoday.commons.adapter.ViewType
 
+data class DevotionalWrapper(val devotionals: List<Devotional>) : Parcelable {
+    companion object {
+        @JvmField val CREATOR: Parcelable.Creator<DevotionalWrapper> = object : Parcelable.Creator<DevotionalWrapper> {
+            override fun createFromParcel(source: Parcel): DevotionalWrapper = DevotionalWrapper(source)
+            override fun newArray(size: Int): Array<DevotionalWrapper?> = arrayOfNulls(size)
+        }
+    }
+
+    constructor(source: Parcel) : this(
+    source.createTypedArrayList(Devotional.CREATOR)
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeTypedList(devotionals)
+    }
+}
+
 data class Devotional(val title: String = "",
                       val date: String = "",
                       val content: String = "",
