@@ -1,5 +1,8 @@
-package com.digzdigital.divinitytoday.data.wp
+package com.digzdigital.divinitytoday.data
 
-/**
- * Created by Digz on 14/06/2017.
- */
+import com.digzdigital.divinitytoday.data.db.DbHelper
+import com.digzdigital.divinitytoday.data.wp.WpHelper
+
+interface DataManager: DbHelper, WpHelper{
+
+}
