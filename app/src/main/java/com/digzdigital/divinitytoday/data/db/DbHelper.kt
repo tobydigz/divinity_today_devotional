@@ -1,5 +1,14 @@
 package com.digzdigital.divinitytoday.data.db
 
-/**
- * Created by Digz on 14/06/2017.
- */
+import com.digzdigital.divinitytoday.data.model.Devotional
+import rx.Observable
+
+interface DbHelper {
+
+    fun savePost(devotional: Devotional):Boolean
+
+    fun queryForPosts(): Observable<List<Devotional>>
+
+    fun deletepost(devotional: Devotional)
+
+}
