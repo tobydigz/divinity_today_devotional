@@ -34,7 +34,7 @@ public class SavedDevotionalsActivity extends AppCompatActivity implements Saved
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.saved_layout);
+        setContentView(R.layout.fragment_saved_devotionals);
 
 
         ((DivinityTodayApp) getApplication()).getAppComponent().inject(this);

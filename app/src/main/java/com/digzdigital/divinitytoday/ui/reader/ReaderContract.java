@@ -1,7 +1,7 @@
 package com.digzdigital.divinitytoday.ui.reader;
 
-import com.digzdigital.divinitytoday.data.model.Devotional;
 
+import com.digzdigital.divinitytoday.data.model.Devotional;
 
 public interface ReaderContract {
     interface View {

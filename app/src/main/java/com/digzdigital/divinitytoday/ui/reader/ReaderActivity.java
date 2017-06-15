@@ -33,7 +33,7 @@ public class ReaderActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onCreate(Bundle c) {
         super.onCreate(c);
-        this.setContentView(R.layout.reader_wrapper);
+        this.setContentView(R.layout.activity_reader);
         ((DivinityTodayApp) getApplication()).getAppComponent().inject(this);
         Toolbar divinityBar = (Toolbar) findViewById(R.id.divinity_toolbar);
         setSupportActionBar(divinityBar);
@@ -66,7 +66,7 @@ public class ReaderActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        if (!devotional.isSaved()) {
+        if (false) {
             presenter.saveDevotional(devotional);
             return;
         }

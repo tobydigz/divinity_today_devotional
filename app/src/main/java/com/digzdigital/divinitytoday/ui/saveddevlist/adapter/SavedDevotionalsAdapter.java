@@ -28,7 +28,7 @@ public class SavedDevotionalsAdapter extends RecyclerView.Adapter<SavedDevotiona
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_grid, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_saved_devotional, parent, false);
         return new ViewHolder(v);
     }
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class SavedDevotionalsPresenter implements SavedDevotionalsContract.Presenter, DataManager.DbListener {
+public class SavedDevotionalsPresenter implements SavedDevotionalsContract.Presenter{
 
     @SuppressWarnings("WeakerAccess")
     @Inject
@@ -23,7 +23,6 @@ public class SavedDevotionalsPresenter implements SavedDevotionalsContract.Prese
     @Override
     public void setView(SavedDevotionalsActivity view) {
         this.view = view;
-        dataManager.setDbListener(this);
     }
 
     @Override
@@ -38,21 +37,8 @@ public class SavedDevotionalsPresenter implements SavedDevotionalsContract.Prese
 
     @Override
     public void deleteDevotionals(Devotional devotional) {
-        int position = devotionals.indexOf(devotional);
-        devotional.delete();
-        devotionals.remove(devotional);
-        int size = getDevSize();
-        view.notifyAdapter(position, size);
+        // view.notifyAdapter(position, size);
     }
 
-    @Override
-    public void onPostsLoaded(ArrayList<Devotional> devotionals) {
-        this.devotionals = devotionals;
-        view.doRest(devotionals);
-    }
 
-    @Override
-    public void onError(String error) {
-
-    }
 }

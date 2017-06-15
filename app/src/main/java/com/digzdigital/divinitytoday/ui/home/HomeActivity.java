@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.digzdigital.divinitytoday.R;
-import com.digzdigital.divinitytoday.ui.devlist.DevListActivity;
 import com.digzdigital.divinitytoday.ui.saveddevlist.SavedDevotionalsActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -79,7 +78,7 @@ public class HomeActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.reader:
-                startActivity(new Intent(this, DevListActivity.class));
+                // startActivity(new Intent(this, DevListActivity.class));
                 break;
             case R.id.saveFile:
                 startActivity(new Intent(this, SavedDevotionalsActivity.class));

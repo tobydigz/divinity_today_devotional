@@ -3,14 +3,14 @@ package com.digzdigital.divinitytoday.dagger;
 import android.app.Application;
 import android.content.Context;
 
-import com.digzdigital.divinitytoday.DivinityTodayApp;
 import com.digzdigital.divinitytoday.data.AppDataManager;
 import com.digzdigital.divinitytoday.data.DataManager;
-import com.digzdigital.divinitytoday.data.db.AppDbHelper;
 import com.digzdigital.divinitytoday.data.db.DbHelper;
+import com.digzdigital.divinitytoday.data.db.PaperDbHelper;
 import com.digzdigital.divinitytoday.data.wp.AppWpHelper;
 import com.digzdigital.divinitytoday.data.wp.WpHelper;
-import com.digzdigital.divinitytoday.ui.devlist.DevListPresenter;
+import com.digzdigital.divinitytoday.data.wp.network.RestApi;
+import com.digzdigital.divinitytoday.ui.devlist.DevotionalsPresenter;
 import com.digzdigital.divinitytoday.ui.reader.ReaderPresenter;
 import com.digzdigital.divinitytoday.ui.saveddevlist.SavedDevotionalsPresenter;
 
@@ -42,20 +42,26 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public DataManager providesDataManager() {
-        return new AppDataManager();
+    public RestApi providesRestApi() {
+        return new RestApi();
     }
 
     @Provides
     @Singleton
-    public WpHelper providesWpHelper() {
-        return new AppWpHelper(app);
+    public WpHelper providesWpHelper(RestApi restApi) {
+        return new AppWpHelper(restApi);
     }
 
     @Provides
     @Singleton
     public DbHelper providesDbHelper() {
-        return new AppDbHelper();
+        return new PaperDbHelper();
+    }
+
+    @Provides
+    @Singleton
+    public DataManager providesDataManager(DbHelper dbHelper, WpHelper wpHelper) {
+        return new AppDataManager(dbHelper, wpHelper);
     }
 
     @Provides
@@ -66,8 +72,8 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public DevListPresenter provideDevListPresenter() {
-        return new DevListPresenter();
+    public DevotionalsPresenter provideDevListPresenter(DataManager dataManager) {
+        return new DevotionalsPresenter(dataManager);
     }
 
     @Provides
