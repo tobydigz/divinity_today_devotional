@@ -1,5 +1,7 @@
 package com.digzdigital.divinitytoday.commons.adapter
 
-/**
- * Created by Digz on 14/06/2017.
- */
+object AdapterConstants{
+    val DEVOTIONAL = 1
+    val LOADING = 2
+    val AD = 3
+}
