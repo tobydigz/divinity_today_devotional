@@ -1,5 +1,8 @@
 package com.digzdigital.divinitytoday.ui.devlist.adapter
 
-/**
- * Created by Digz on 14/06/2017.
- */
+import android.view.View
+import com.digzdigital.divinitytoday.data.model.Devotional
+
+interface MyClickListener{
+    fun onItemClick(devotional:Devotional)
+}

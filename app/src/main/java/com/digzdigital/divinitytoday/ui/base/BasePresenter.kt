@@ -1,5 +1,13 @@
 package com.digzdigital.divinitytoday.ui.base
 
 /**
- * Created by Digz on 14/06/2017.
+ * Base presenter.
+ *
+ * @param <V> - View
  */
+
+interface BasePresenter<V>{
+    fun onAttach(view: V)
+
+    fun onDetach()
+}
