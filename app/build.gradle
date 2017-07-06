@@ -10,8 +10,8 @@ android {
         applicationId "com.digzdigital.divinitytoday"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 5
-        versionName "2.1.1"
+        versionCode 6
+        versionName "3.0.0"
     }
     buildTypes {
         release {

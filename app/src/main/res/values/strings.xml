@@ -58,5 +58,6 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="divinity_today_devotional">Divinity Today Devotional</string>
 
 </resources>
