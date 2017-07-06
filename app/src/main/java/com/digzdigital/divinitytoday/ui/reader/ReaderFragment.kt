@@ -59,6 +59,10 @@ class ReaderFragment : Fragment(), ReaderContract.View {
         readerTitle.text = devotional.getCleanedTitle()
         readerDate.text = devotional.getFormattedDate()
         readerContent.text = devotional.getCleanedContent()
+        if(!isOnline){
+            readerSave.visibility = View.GONE
+            return
+        }
         readerSave.setOnClickListener { presenter.saveDevotional(devotional) }
     }
 
