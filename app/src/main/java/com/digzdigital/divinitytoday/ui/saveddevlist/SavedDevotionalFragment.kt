@@ -28,7 +28,6 @@ class SavedDevotionalFragment : Fragment(), SavedDevotionalContract.View {
     lateinit var presenter: SavedDevotionalContract.Presenter
     lateinit var progressDialog: ProgressDialog
     lateinit var callback: OnDevotionalSelectedListener
-    private var isLoaded = false
 
     companion object {
         private val KEY_DIVINITY = "divinity_saved"
@@ -55,14 +54,13 @@ class SavedDevotionalFragment : Fragment(), SavedDevotionalContract.View {
             (devotionalsList.adapter as DevotionalAdapter).clearAndAddDevotionals(devotional.devotionals)
             return
         }
-        if (isLoaded) return
         showProgressDialog()
         presenter.loadDevotionals()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val devotionals = (devotionalsList.adapter as DevotionalAdapter).getDevotionals()
+        val devotionals = (devotionalsList.adapter as SavedDevotionalAdapter).getDevotionals()
         val devotional = DevotionalWrapper(devotionals)
         if (!devotionals.isEmpty()) outState.putParcelable(KEY_DIVINITY, devotional.copy(devotionals = devotionals))
     }
@@ -96,7 +94,6 @@ class SavedDevotionalFragment : Fragment(), SavedDevotionalContract.View {
 
     override fun showDevotionals(devotionals: ArrayList<Devotional>) {
         if (devotionals.isEmpty()) return
-        isLoaded = true
         (devotionalsList.adapter as SavedDevotionalAdapter).addDevotionals(devotionals)
     }
 

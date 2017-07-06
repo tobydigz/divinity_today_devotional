@@ -16,7 +16,7 @@ class SavedDevotionalAdapter(myClickListener: SavedDevotionalClickListener): Rec
 
     init {
         delegateAdapters.put(AdapterConstants.DEVOTIONAL, SavedDevotionalDelegateAdapter(myClickListener))
-        items = java.util.ArrayList()
+        items = ArrayList()
     }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, this.items[position])
@@ -36,11 +36,10 @@ class SavedDevotionalAdapter(myClickListener: SavedDevotionalClickListener): Rec
 
     fun addDevotionals(news:List<Devotional>){
         val initPosition = items.size - 1
-        items.removeAt(initPosition)
-        notifyItemRemoved(initPosition)
 
         items.addAll(news)
-        notifyItemRangeChanged(initPosition, items.size + 1)
+        notifyItemRangeChanged(0, items.size + 1)
+        notifyDataSetChanged()
     }
 
     fun removeDevotional(position:Int){
@@ -48,13 +47,6 @@ class SavedDevotionalAdapter(myClickListener: SavedDevotionalClickListener): Rec
         notifyItemRemoved(position)
 
         notifyItemRangeChanged(position, items.size + 1)
-    }
-    fun clearAndAddDevotionals(news: List<Devotional>){
-        items.clear()
-        notifyItemRangeRemoved(0, getLastPosition())
-
-        items.addAll(news)
-        notifyItemRangeInserted(0, items.size)
     }
 
     fun getDevotionals(): List<Devotional>{
@@ -64,6 +56,4 @@ class SavedDevotionalAdapter(myClickListener: SavedDevotionalClickListener): Rec
     }
 
     private fun getLastPosition() = if (items.lastIndex == -1) 0 else items.lastIndex
-
-
 }

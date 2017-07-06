@@ -29,7 +29,7 @@ class SavedDevotionalPresenter(val dataManager: DataManager):SavedDevotionalCont
 
                     devotionals.addAll(retrievedDevotionals)
                     view.dismissProgressDialog()
-                    view.showDevotionals(devotionals)
+                    view.showDevotionals(retrievedDevotionals as ArrayList<Devotional>)
                 }
         subscriptions.add(subscription)
     }
