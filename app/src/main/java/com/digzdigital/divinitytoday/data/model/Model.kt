@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.digzdigital.divinitytoday.commons.adapter.AdapterConstants
 import com.digzdigital.divinitytoday.commons.adapter.ViewType
+import com.google.android.gms.ads.NativeExpressAdView
 
 data class DevotionalWrapper(val devotionals: List<Devotional>) : Parcelable {
     companion object {
@@ -14,7 +15,7 @@ data class DevotionalWrapper(val devotionals: List<Devotional>) : Parcelable {
     }
 
     constructor(source: Parcel) : this(
-    source.createTypedArrayList(Devotional.CREATOR)
+            source.createTypedArrayList(Devotional.CREATOR)
     )
 
     override fun describeContents() = 0
@@ -28,7 +29,7 @@ data class Devotional(val title: String = "",
                       val date: String = "",
                       val content: String = "",
                       var id: String = "") : ViewType, Parcelable {
-    override fun getViewType()= AdapterConstants.DEVOTIONAL
+    override fun getViewType() = AdapterConstants.DEVOTIONAL
 
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<Devotional> = object : Parcelable.Creator<Devotional> {
@@ -38,10 +39,10 @@ data class Devotional(val title: String = "",
     }
 
     constructor(source: Parcel) : this(
-    source.readString(),
-    source.readString(),
-    source.readString(),
-    source.readString()
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString()
     )
 
     override fun describeContents() = 0
@@ -52,4 +53,8 @@ data class Devotional(val title: String = "",
         dest.writeString(content)
         dest.writeString(id)
     }
+}
+
+data class DevotionalAd(val ad: NativeExpressAdView) : ViewType {
+    override fun getViewType() = AdapterConstants.AD
 }

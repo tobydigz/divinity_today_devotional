@@ -9,10 +9,11 @@ import com.digzdigital.divinitytoday.commons.adapter.AdapterConstants
 import com.digzdigital.divinitytoday.commons.adapter.ViewType
 import com.digzdigital.divinitytoday.commons.adapter.ViewTypeDelegateAdapter
 import com.digzdigital.divinitytoday.data.model.Devotional
+import com.digzdigital.divinitytoday.data.model.DevotionalAd
 
 class DevotionalAdapter(myClickListener: MyClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var items: ArrayList<ViewType>
+    var items: ArrayList<ViewType>
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
     private val loadingItem = object : ViewType {
         override fun getViewType() = AdapterConstants.LOADING
@@ -21,6 +22,7 @@ class DevotionalAdapter(myClickListener: MyClickListener) : RecyclerView.Adapter
     init {
         delegateAdapters.put(AdapterConstants.LOADING, LoadingDelegateAdapter())
         delegateAdapters.put(AdapterConstants.DEVOTIONAL, DevotionalDelegateAdapter(myClickListener))
+        delegateAdapters.put(AdapterConstants.AD, AdDelegateAdapter())
         items = java.util.ArrayList()
         items.add(loadingItem)
     }
@@ -38,7 +40,7 @@ class DevotionalAdapter(myClickListener: MyClickListener) : RecyclerView.Adapter
     }
 
     override fun getItemViewType(position: Int): Int {
-        return this.items.get(position).getViewType()
+        return this.items[position].getViewType()
     }
 
     fun addDevotionals(news: List<Devotional>) {
@@ -49,6 +51,11 @@ class DevotionalAdapter(myClickListener: MyClickListener) : RecyclerView.Adapter
         items.addAll(news)
         items.add(loadingItem)
         notifyItemRangeChanged(initPosition, items.size + 1)
+    }
+
+    fun addAds(position:Int, devotionalAd: DevotionalAd){
+        items.add(position, devotionalAd)
+        notifyItemInserted(position)
     }
 
     fun clearAndAddDevotionals(news: List<Devotional>) {

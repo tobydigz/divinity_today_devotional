@@ -7,7 +7,7 @@ import com.digzdigital.divinitytoday.ui.base.BaseView
 interface DevListContract {
     interface View : BaseView {
 
-        fun showDevotionals(devotionals: ArrayList<Devotional>)
+        fun loadDevotionalsAndAds(devotionals: ArrayList<Devotional>)
 
         fun reShowDevotionals(devotionals: ArrayList<Devotional>)
 
@@ -16,9 +16,6 @@ interface DevListContract {
         fun dismissProgressDialog()
 
         fun makeToast(message: String)
-
-        fun dismissSwipeRefresher()
-
     }
 
     interface Presenter : BasePresenter<View> {
