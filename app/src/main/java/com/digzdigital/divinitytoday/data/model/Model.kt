@@ -17,7 +17,8 @@ data class Devotional(val id: String,
                       val title: String,
                       val date: String,
                       val content: String,
-                      val excerpt: String) : ViewType {
+                      val excerpt: String,
+                      val bookmarked: Boolean) : ViewType {
     override fun getViewType() = AdapterConstants.DEVOTIONAL
 }
 

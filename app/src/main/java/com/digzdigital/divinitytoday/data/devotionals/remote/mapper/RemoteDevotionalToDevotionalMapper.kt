@@ -11,7 +11,8 @@ class RemoteDevotionalToDevotionalMapper : Mapper<RemoteDevotional, Devotional> 
             title = from.title.rendered,
             date = from.date,
             content = from.content.rendered,
-            excerpt = from.excerpt.rendered
+            excerpt = from.excerpt.rendered,
+            bookmarked = false
     )
 
     override fun mapMany(fromCollection: Collection<RemoteDevotional>): Collection<Devotional> {
