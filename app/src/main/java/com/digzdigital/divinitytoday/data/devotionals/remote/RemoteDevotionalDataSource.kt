@@ -16,6 +16,10 @@ class RemoteDevotionalDataSource @Inject constructor(private val apiService: Api
 
     }
 
+    override fun getBookmarkedDevotionals(): Single<List<Devotional>> {
+        return Single.just(ArrayList())
+    }
+
     override fun getDevotional(id: String): Single<Devotional> {
         return apiService.getDevotional(id)
                 .map { devotional -> mapper.map1(devotional) }

@@ -22,7 +22,7 @@ class LocalDevotionalDataSource constructor(private val mapper: Mapper<Devotiona
         return ArrayList(mapper.mapMany(devotionalRealmList))
     }
 
-    override fun getFavoriteDevotionals() = Single.just(findFavoriteDevotionals())
+    override fun getBookmarkedDevotionals() = Single.just(findFavoriteDevotionals())
 
     private fun findFavoriteDevotionals(): List<Devotional> {
         val realm = Realm.getDefaultInstance()

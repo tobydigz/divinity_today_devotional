@@ -16,7 +16,7 @@ class DevotionalRepository @Inject constructor(@Local private val localDataSourc
     private val inMemoryDataSource: MutableMap<String, Devotional> = LinkedHashMap()
     private var refresh = false
 
-    fun getReports(): Single<List<Devotional>> {
+    fun getDevotionals(): Single<List<Devotional>> {
         val remoteSource = getAndSaveRemoteDevotionals(0)
 
         if (refresh) {
@@ -35,6 +35,13 @@ class DevotionalRepository @Inject constructor(@Local private val localDataSourc
                 remoteSource)
                 .filter { it.isEmpty() }
                 .firstOrError()
+
+    }
+
+
+    fun getBookmarkedDevotionals(): Single<List<Devotional>> {
+
+        return localDataSource.getBookmarkedDevotionals()
 
     }
 

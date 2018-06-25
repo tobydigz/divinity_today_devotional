@@ -6,7 +6,7 @@ import io.reactivex.Single
 interface DevotionalDataSource {
     fun getDevotionals(startFrom: String, size: String): Single<List<Devotional>>
 
-    fun getFavoriteDevotionals(): Single<List<Devotional>>
+    fun getBookmarkedDevotionals(): Single<List<Devotional>>
 
     fun getDevotional(id: String): Single<Devotional>
 }
