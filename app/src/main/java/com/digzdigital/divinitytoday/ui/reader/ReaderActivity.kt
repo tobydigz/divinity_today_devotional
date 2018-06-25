@@ -1,65 +1,43 @@
 package com.digzdigital.divinitytoday.ui.reader
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.digzdigital.divinitytoday.DivinityTodayApp
 import com.digzdigital.divinitytoday.R
 import com.digzdigital.divinitytoday.data.model.Devotional
 import kotlinx.android.synthetic.main.activity_reader.*
-import xyz.digzdigital.keddit.commons.extensions.inflate
 import javax.inject.Inject
 
 
-class ReaderFragment : Fragment(), ReaderContract.View {
+class ReaderActivity : AppCompatActivity(), ReaderContract.View {
 
     @Inject
     lateinit var presenter: ReaderPresenter
-    var devotionalId = ""
 
     companion object {
-        const val ARG_PARAM1 = "devotional"
-
-
-        fun newInstance(devotionalId: String): Fragment {
-            val fragment = ReaderFragment()
-            val args = Bundle()
-            args.putString(ARG_PARAM1, devotionalId)
-            fragment.arguments = args
-            return fragment
-        }
+        const val DEVOTIONAL_ID = "devotional"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments == null) {
+        setContentView(R.layout.activity_reader)
 
+        val devotionalId = intent.getStringExtra(DEVOTIONAL_ID)
+
+        if (devotionalId.isNullOrEmpty()) {
+            onBackPressed()
             return
         }
 
-        (activity!!.application as DivinityTodayApp).appComponent.inject(this)
-
-        devotionalId = arguments!!.getString(ARG_PARAM1)
+        (application as DivinityTodayApp).appComponent.inject(this)
 
         presenter.onAttach(this)
-
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return container?.inflate(R.layout.activity_reader)
-
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+        presenter.loadDevotional(devotionalId)
     }
 
     override fun showToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun showDevotional(devotional: Devotional) {
