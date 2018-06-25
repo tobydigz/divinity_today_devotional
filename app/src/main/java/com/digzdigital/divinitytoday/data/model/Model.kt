@@ -20,6 +20,23 @@ data class Devotional(val id: String,
                       val excerpt: String,
                       val bookmarked: Boolean) : ViewType {
     override fun getViewType() = AdapterConstants.DEVOTIONAL
+
+    override fun equals(other: Any?): Boolean {
+        if (other == null) return false
+        if (other !is Devotional) return false
+        if (other.id == id) return true
+        return false
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + title.hashCode()
+        result = 31 * result + date.hashCode()
+        result = 31 * result + content.hashCode()
+        result = 31 * result + excerpt.hashCode()
+        result = 31 * result + bookmarked.hashCode()
+        return result
+    }
 }
 
 data class DevotionalAd(val ad: NativeExpressAdView) : ViewType {

@@ -14,8 +14,8 @@ import com.digzdigital.divinitytoday.ui.devlist.DevListContract;
 import com.digzdigital.divinitytoday.ui.devlist.DevotionalsPresenter;
 import com.digzdigital.divinitytoday.ui.reader.ReaderContract;
 import com.digzdigital.divinitytoday.ui.reader.ReaderPresenter;
-import com.digzdigital.divinitytoday.ui.saveddevlist.SavedDevotionalContract;
-import com.digzdigital.divinitytoday.ui.saveddevlist.SavedDevotionalPresenter;
+import com.digzdigital.divinitytoday.ui.bookmarkeddevotionals.SavedDevotionalContract;
+import com.digzdigital.divinitytoday.ui.bookmarkeddevotionals.SavedDevotionalPresenter;
 
 import javax.inject.Singleton;
 

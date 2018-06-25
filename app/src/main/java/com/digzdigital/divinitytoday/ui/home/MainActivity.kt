@@ -15,8 +15,8 @@ import com.digzdigital.divinitytoday.R
 import com.digzdigital.divinitytoday.commons.OnDevotionalSelectedListener
 import com.digzdigital.divinitytoday.data.model.Devotional
 import com.digzdigital.divinitytoday.ui.devlist.DevotionalsFragment
-import com.digzdigital.divinitytoday.ui.reader.ReaderFragment
-import com.digzdigital.divinitytoday.ui.saveddevlist.SavedDevotionalFragment
+import com.digzdigital.divinitytoday.ui.reader.ReaderActivity
+import com.digzdigital.divinitytoday.ui.bookmarkeddevotionals.SavedDevotionalFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnDevotionalSelectedListener {
 
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onDevotionalSelected(devotional: Devotional, isOnline:Boolean) {
 //        Toast.makeText(this, "${devotional.title} is selected", Toast.LENGTH_SHORT).show()
-         val fragment = ReaderFragment.newInstance(devotional, isOnline)
+         val fragment = ReaderActivity.newInstance(devotional, isOnline)
          fragmentManager.beginTransaction()
                  .replace(R.id.content_frame, fragment)
                  .addToBackStack(null)
