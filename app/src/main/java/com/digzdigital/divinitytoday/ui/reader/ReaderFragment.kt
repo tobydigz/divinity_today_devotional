@@ -9,9 +9,9 @@ import android.widget.Toast
 import com.digzdigital.divinitytoday.DivinityTodayApp
 import com.digzdigital.divinitytoday.R
 import com.digzdigital.divinitytoday.data.model.Devotional
-import com.digzdigital.divinitytoday.data.model.getCleanedContent
-import com.digzdigital.divinitytoday.data.model.getCleanedTitle
-import com.digzdigital.divinitytoday.data.model.getFormattedDate
+import com.digzdigital.divinitytoday.data.commons.getCleanedContent
+import com.digzdigital.divinitytoday.data.commons.getCleanedTitle
+import com.digzdigital.divinitytoday.data.commons.getFormattedDate
 import kotlinx.android.synthetic.main.activity_reader.*
 import xyz.digzdigital.keddit.commons.extensions.inflate
 import javax.inject.Inject

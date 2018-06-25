@@ -1,10 +1,10 @@
-package com.digzdigital.divinitytoday.data.model
+package com.digzdigital.divinitytoday.data.commons
 
+import com.digzdigital.divinitytoday.data.model.Devotional
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.safety.Whitelist
 import java.text.SimpleDateFormat
-import java.util.*
 
 fun Devotional.getFormattedDate(): String {
     val dateString1 = date.replace("T", " ")

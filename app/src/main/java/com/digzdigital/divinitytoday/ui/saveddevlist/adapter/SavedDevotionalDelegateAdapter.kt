@@ -7,8 +7,8 @@ import com.digzdigital.divinitytoday.commons.SavedDevotionalClickListener
 import com.digzdigital.divinitytoday.commons.adapter.ViewType
 import com.digzdigital.divinitytoday.commons.adapter.ViewTypeDelegateAdapter
 import com.digzdigital.divinitytoday.data.model.Devotional
-import com.digzdigital.divinitytoday.data.model.getCleanedTitle
-import com.digzdigital.divinitytoday.data.model.getFormattedDate
+import com.digzdigital.divinitytoday.data.commons.getCleanedTitle
+import com.digzdigital.divinitytoday.data.commons.getFormattedDate
 import kotlinx.android.synthetic.main.item_saved_devotional.view.*
 import xyz.digzdigital.keddit.commons.extensions.inflate
 
