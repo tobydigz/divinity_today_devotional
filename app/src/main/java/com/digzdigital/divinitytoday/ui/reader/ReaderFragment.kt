@@ -42,18 +42,18 @@ class ReaderFragment : Fragment(), ReaderContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            devotional = arguments.getParcelable(ARG_PARAM1)
-            isOnline = arguments.getBoolean(ARG_PARAM2)
+            devotional = arguments!!.getParcelable(ARG_PARAM1)
+            isOnline = arguments!!.getBoolean(ARG_PARAM2)
         }
-        (activity.application as DivinityTodayApp).appComponent.inject(this)
+        (activity!!.application as DivinityTodayApp).appComponent.inject(this)
         presenter.onAttach(this)
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(R.layout.activity_reader)
-    }
 
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         readerTitle.text = devotional.getCleanedTitle()

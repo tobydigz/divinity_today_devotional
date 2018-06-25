@@ -50,12 +50,12 @@ class DevotionalsFragment : Fragment(), DevListContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity.application as DivinityTodayApp).appComponent.inject(this)
+        (activity!!.application as DivinityTodayApp).appComponent.inject(this)
 
         presenter.onAttach(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(R.layout.fragment_devotionals)
     }
 

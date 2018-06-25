@@ -2,15 +2,15 @@ package com.digzdigital.divinitytoday.ui.saveddevlist
 
 import com.digzdigital.divinitytoday.data.DataManager
 import com.digzdigital.divinitytoday.data.model.Devotional
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import rx.subscriptions.CompositeSubscription
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
-class SavedDevotionalPresenter(val dataManager: DataManager):SavedDevotionalContract.Presenter {
+class SavedDevotionalPresenter(val dataManager: DataManager) : SavedDevotionalContract.Presenter {
 
     lateinit var view: SavedDevotionalContract.View
     private val devotionals = ArrayList<Devotional>()
-    private var subscriptions: CompositeSubscription= CompositeSubscription()
+    private var subscriptions = CompositeDisposable()
 
     override fun onAttach(view: SavedDevotionalContract.View) {
         this.view = view
@@ -24,8 +24,7 @@ class SavedDevotionalPresenter(val dataManager: DataManager):SavedDevotionalCont
         val subscription = dataManager.queryForPosts()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    retrievedDevotionals ->
+                .subscribe { retrievedDevotionals ->
 
                     devotionals.addAll(retrievedDevotionals)
                     view.dismissProgressDialog()

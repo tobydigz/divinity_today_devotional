@@ -2,13 +2,13 @@ package com.digzdigital.divinitytoday.data.db
 
 import com.digzdigital.divinitytoday.data.model.Devotional
 import io.paperdb.Paper
-import rx.Observable
+import io.reactivex.Observable
 
 class PaperDbHelper() : DbHelper {
 
-    override fun savePost(devotional: Devotional):Boolean {
+    override fun savePost(devotional: Devotional): Boolean {
         val isSaved = Paper.book().exist(devotional.id)
-        if (isSaved){
+        if (isSaved) {
             return false
         }
         Paper.book().write(devotional.id, devotional)
@@ -16,8 +16,7 @@ class PaperDbHelper() : DbHelper {
     }
 
     override fun queryForPosts(): Observable<List<Devotional>> {
-        return Observable.create {
-            subscriber ->
+        return Observable.create { subscriber ->
             val allKeys = Paper.book().allKeys
             val devotionals = ArrayList<Devotional>()
             for (key: String in allKeys) {
@@ -25,7 +24,7 @@ class PaperDbHelper() : DbHelper {
                 devotionals.add(devotional)
             }
             subscriber.onNext(devotionals)
-            subscriber.onCompleted()
+            subscriber.onComplete()
         }
 
     }

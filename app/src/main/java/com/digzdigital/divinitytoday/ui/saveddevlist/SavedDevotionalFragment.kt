@@ -33,14 +33,14 @@ class SavedDevotionalFragment : Fragment(), SavedDevotionalContract.View {
         private val KEY_DIVINITY = "divinity_saved"
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(R.layout.fragment_devotionals)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        (activity.application as DivinityTodayApp).appComponent.inject(this)
+        (activity!!.application as DivinityTodayApp).appComponent.inject(this)
 
         presenter.onAttach(this)
         devotionalsList.apply {
@@ -83,7 +83,7 @@ class SavedDevotionalFragment : Fragment(), SavedDevotionalContract.View {
         val title = "Delete Devotional?"
         val accept = "Yes"
         val reject = "Cancel"
-        val ad = AlertDialog.Builder(context)
+        val ad = AlertDialog.Builder(context!!)
                 .setTitle(title)
                 .setMessage("Are you sure you want to delete this devotional")
                 .setPositiveButton(accept) { _, _ -> presenter.deleteDevotional(devotional) }

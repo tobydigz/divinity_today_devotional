@@ -3,34 +3,33 @@ package com.digzdigital.divinitytoday.data.wp
 import android.util.Log
 import com.digzdigital.divinitytoday.data.model.Devotional
 import com.digzdigital.divinitytoday.data.wp.network.RestApi
-import rx.Observable
+import io.reactivex.Observable
 
 
-class AppWpHelper(private val api: RestApi): WpHelper {
+class AppWpHelper(private val api: RestApi) : WpHelper {
     override fun getDevotionals(offset: String, per_page: String): Observable<List<Devotional>> {
         Log.d("DigzApp", "gotten to begging of get")
-        return Observable.create{
-            subscriber ->
+        return Observable.create { subscriber ->
 
             val callResponse = api.getDevotionals(offset, per_page)
-            try{
+            try {
                 val response = callResponse.execute()
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     Log.d("DigzApp", "gotten devotionals")
-                    val devotionals = response.body().map {
+                    val devotionals = response.body()!!.map {
                         Devotional(it.title.rendered, it.date, it.content.rendered, it.id)
                     }
                     subscriber.onNext(devotionals)
-                    subscriber.onCompleted()
-                }else {
+                    subscriber.onComplete()
+                } else {
                     Log.d("DigzApp", "error getting devotionals")
                     subscriber.onError(Throwable(response.message()))
                 }
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 Log.d("DigzApp", "error getting devotionals ${e.message}")
                 val devotionals = ArrayList<Devotional>()
                 subscriber.onNext(devotionals)
-                subscriber.onCompleted()
+                subscriber.onComplete()
             }
 
         }

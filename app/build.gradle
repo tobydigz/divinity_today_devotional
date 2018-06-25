@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 apply plugin: 'realm-android'
+apply plugin: 'kotlin-kapt'
 
 apply from: "$rootProject.projectDir/config/quality/quality.gradle"
 apply from: "$rootProject.projectDir/config/dependencies.gradle"

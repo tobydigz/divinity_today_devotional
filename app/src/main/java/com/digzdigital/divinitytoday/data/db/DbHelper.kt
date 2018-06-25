@@ -1,11 +1,11 @@
 package com.digzdigital.divinitytoday.data.db
 
 import com.digzdigital.divinitytoday.data.model.Devotional
-import rx.Observable
+import io.reactivex.Observable
 
 interface DbHelper {
 
-    fun savePost(devotional: Devotional):Boolean
+    fun savePost(devotional: Devotional): Boolean
 
     fun queryForPosts(): Observable<List<Devotional>>
 

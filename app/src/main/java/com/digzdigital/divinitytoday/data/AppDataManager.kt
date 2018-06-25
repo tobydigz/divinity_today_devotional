@@ -3,9 +3,9 @@ package com.digzdigital.divinitytoday.data
 import com.digzdigital.divinitytoday.data.db.DbHelper
 import com.digzdigital.divinitytoday.data.model.Devotional
 import com.digzdigital.divinitytoday.data.wp.WpHelper
-import rx.Observable
+import io.reactivex.Observable
 
-class AppDataManager(val dbHelper: DbHelper,val wpHelper: WpHelper): DataManager {
+class AppDataManager(val dbHelper: DbHelper, val wpHelper: WpHelper) : DataManager {
     override fun getDevotionals(offset: String, per_page: String): Observable<List<Devotional>> {
         return wpHelper.getDevotionals(offset, per_page)
     }
