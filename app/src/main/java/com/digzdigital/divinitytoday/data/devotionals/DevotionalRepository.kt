@@ -50,9 +50,6 @@ class DevotionalRepository @Inject constructor(@Local private val localDataSourc
     }
 
     fun getDevotional(id: String): Single<Devotional> {
-        if (inMemoryDataSource[id] != null) {
-            return Single.just(inMemoryDataSource[id])
-        }
 
         val remoteSource = getAndSaveSingleRemoteDevotional(id)
         val localSource = getLocalDevotionals(id)

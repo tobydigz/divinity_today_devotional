@@ -2,16 +2,15 @@ package com.digzdigital.divinitytoday.ui.devlist.adapter
 
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.ViewGroup
-import com.digzdigital.divinitytoday.commons.MyClickListener
+import com.digzdigital.divinitytoday.commons.DevotionalClickListener
 import com.digzdigital.divinitytoday.commons.adapter.AdapterConstants
 import com.digzdigital.divinitytoday.commons.adapter.ViewType
 import com.digzdigital.divinitytoday.commons.adapter.ViewTypeDelegateAdapter
 import com.digzdigital.divinitytoday.data.model.Devotional
 import com.digzdigital.divinitytoday.data.model.DevotionalAd
 
-class DevotionalAdapter(myClickListener: MyClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DevotionalAdapter(myClickListener: DevotionalClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var items: ArrayList<ViewType>
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
@@ -53,7 +52,7 @@ class DevotionalAdapter(myClickListener: MyClickListener) : RecyclerView.Adapter
         notifyItemRangeChanged(initPosition, items.size + 1)
     }
 
-    fun addAds(position:Int, devotionalAd: DevotionalAd){
+    fun addAds(position: Int, devotionalAd: DevotionalAd) {
         items.add(position, devotionalAd)
         notifyItemInserted(position)
     }
@@ -74,6 +73,8 @@ class DevotionalAdapter(myClickListener: MyClickListener) : RecyclerView.Adapter
                 .filter { it.getViewType() == AdapterConstants.DEVOTIONAL }
                 .map { it as Devotional }
     }
+
+    fun getDevotionalsCount()=getDevotionals().size
 
     private fun getLastPosition() = if (items.lastIndex == -1) 0 else items.lastIndex
 

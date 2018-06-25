@@ -7,9 +7,9 @@ import com.digzdigital.divinitytoday.ui.base.BaseView
 interface DevListContract {
     interface View : BaseView {
 
-        fun loadDevotionalsAndAds(devotionals: ArrayList<Devotional>)
+        fun showDevotionalsAndAds(devotionals: List<Devotional>)
 
-        fun reShowDevotionals(devotionals: ArrayList<Devotional>)
+        fun showMoreDevotionals(devotionals: List<Devotional>)
 
         fun showProgressDialog()
 
@@ -20,14 +20,15 @@ interface DevListContract {
 
     interface Presenter : BasePresenter<View> {
 
-        fun loadDevotionals(endpoint: Int=0)
+        fun loadDevotionals()
 
-        fun reloadDevotionals(endpoint: Int=0)
+        fun loadMoreDevotionals(endpoint: Int = 0)
 
-        val devSize: String
+        fun refreshDevotionals()
 
-        fun showDevotionals()
+        fun addDevotionalToBookmarks(devotional: Devotional)
 
+        fun removeDevotionalFromBookmarks(devotional: Devotional)
     }
 }
 
