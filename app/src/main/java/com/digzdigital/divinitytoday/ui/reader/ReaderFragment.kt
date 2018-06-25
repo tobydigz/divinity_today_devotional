@@ -9,9 +9,6 @@ import android.widget.Toast
 import com.digzdigital.divinitytoday.DivinityTodayApp
 import com.digzdigital.divinitytoday.R
 import com.digzdigital.divinitytoday.data.model.Devotional
-import com.digzdigital.divinitytoday.data.commons.getCleanedContent
-import com.digzdigital.divinitytoday.data.commons.getCleanedTitle
-import com.digzdigital.divinitytoday.data.commons.getFormattedDate
 import kotlinx.android.synthetic.main.activity_reader.*
 import xyz.digzdigital.keddit.commons.extensions.inflate
 import javax.inject.Inject
@@ -19,33 +16,34 @@ import javax.inject.Inject
 
 class ReaderFragment : Fragment(), ReaderContract.View {
 
-    lateinit private var devotional: Devotional
-    private var isOnline = false
-
     @Inject
-    lateinit var presenter:ReaderContract.Presenter
+    lateinit var presenter: ReaderPresenter
+    var devotionalId = ""
 
-    companion object Factory {
-        val ARG_PARAM1 = "param1"
-        val ARG_PARAM2 = "param2"
+    companion object {
+        const val ARG_PARAM1 = "devotional"
 
-        fun newInstance(devotional: Devotional, isOnline: Boolean): Fragment {
+
+        fun newInstance(devotionalId: String): Fragment {
             val fragment = ReaderFragment()
             val args = Bundle()
-            args.putParcelable(ARG_PARAM1, devotional)
-            args.putBoolean(ARG_PARAM2, isOnline)
-            fragment.setArguments(args)
+            args.putString(ARG_PARAM1, devotionalId)
+            fragment.arguments = args
             return fragment
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            devotional = arguments!!.getParcelable(ARG_PARAM1)
-            isOnline = arguments!!.getBoolean(ARG_PARAM2)
+        if (arguments == null) {
+
+            return
         }
+
         (activity!!.application as DivinityTodayApp).appComponent.inject(this)
+
+        devotionalId = arguments!!.getString(ARG_PARAM1)
+
         presenter.onAttach(this)
 
     }
@@ -54,23 +52,30 @@ class ReaderFragment : Fragment(), ReaderContract.View {
         return container?.inflate(R.layout.activity_reader)
 
     }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        readerTitle.text = devotional.getCleanedTitle()
-        readerDate.text = devotional.getFormattedDate()
-        readerContent.text = devotional.getCleanedContent()
-        if(!isOnline){
-            readerSave.visibility = View.GONE
-            return
-        }
-        readerSave.setOnClickListener { presenter.saveDevotional(devotional) }
+
     }
 
     override fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun disableSaveButton() {
-        readerSave.visibility = View.GONE
+    override fun showDevotional(devotional: Devotional) {
+        readerTitle.text = devotional.title
+        readerDate.text = devotional.date
+        readerContent.text = devotional.content
+        readerSave.isChecked = devotional.bookmarked
+        readerSave.setOnClickListener {
+            if (readerSave.isChecked)
+                presenter.removeDevotionalFromBookmarks(devotional)
+            else
+                presenter.bookmarkDevotional(devotional)
+        }
+    }
+
+    override fun setDevotionalSavedState(isSaved: Boolean) {
+        readerSave.isChecked = isSaved
     }
 }

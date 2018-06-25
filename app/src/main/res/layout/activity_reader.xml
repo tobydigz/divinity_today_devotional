@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,16 +17,15 @@
             android:layout_height="100dp"
             android:alpha="0.1"
             android:scaleType="centerCrop"
-            android:src="@mipmap/divinty_today_banner3"/>
+            android:src="@mipmap/divinty_today_banner3" />
 
-        <ImageButton
+        <ToggleButton
             android:id="@+id/readerSave"
             android:layout_width="wrap_content"
-            android:padding="6dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_library_add_white_48dp"/>
+            android:padding="6dp" />
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -40,19 +38,19 @@
                 android:id="@+id/readerTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
                 android:text="@string/devTitle"
-                android:textSize="22sp"/>
+                android:textColor="@color/white"
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/readerDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/white"
                 android:padding="4dp"
                 android:text="@string/devDate"
-                android:textSize="16sp"/>
+                android:textColor="@color/white"
+                android:textSize="16sp" />
         </LinearLayout>
     </FrameLayout>
 
@@ -74,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:textSize="22sp"/>
+                android:textSize="22sp" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
