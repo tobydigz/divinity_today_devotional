@@ -6,8 +6,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class DevotionalsPresenter(private val repository: DevotionalRepository) : DevListContract.Presenter {
+class DevotionalsPresenter @Inject constructor(private val repository: DevotionalRepository) : DevListContract.Presenter {
 
     lateinit var view: DevListContract.View
 

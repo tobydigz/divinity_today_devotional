@@ -2,35 +2,26 @@ package com.digzdigital.divinitytoday.data.db
 
 import com.digzdigital.divinitytoday.data.model.Devotional
 import io.paperdb.Paper
-import io.reactivex.Observable
+import io.reactivex.Single
 
-class PaperDbHelper() : DbHelper {
+class PaperDbHelper() {
 
-    override fun savePost(devotional: Devotional): Boolean {
-        val isSaved = Paper.book().exist(devotional.id)
-        if (isSaved) {
-            return false
-        }
-        Paper.book().write(devotional.id, devotional)
-        return true
-    }
 
-    override fun queryForPosts(): Observable<List<Devotional>> {
-        return Observable.create { subscriber ->
+    fun queryForPosts(): Single<List<Devotional>> {
+        return Single.create { subscriber ->
             val allKeys = Paper.book().allKeys
             val devotionals = ArrayList<Devotional>()
             for (key: String in allKeys) {
                 val devotional = Paper.book().read<Devotional>(key)
                 devotionals.add(devotional)
             }
-            subscriber.onNext(devotionals)
-            subscriber.onComplete()
+            subscriber.onSuccess(devotionals)
         }
 
     }
 
-    override fun deletepost(devotional: Devotional) {
-        Paper.book().delete(devotional.id)
+    fun deleteAll() {
+        Paper.book().destroy()
     }
 
 }

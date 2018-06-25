@@ -29,7 +29,7 @@ import javax.inject.Inject
 class DevotionalsFragment : Fragment(), DevListContract.View, DevotionalClickListener {
 
     @Inject
-    lateinit var presenter: DevListContract.Presenter
+    lateinit var presenter: DevotionalsPresenter
     lateinit var progressDialog: ProgressDialog
     private val adapter: DevotionalAdapter by lazy {
         DevotionalAdapter(this)
