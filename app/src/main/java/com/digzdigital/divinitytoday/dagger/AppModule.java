@@ -3,9 +3,6 @@ package com.digzdigital.divinitytoday.dagger;
 import android.app.Application;
 import android.content.Context;
 
-import com.digzdigital.divinitytoday.data.db.DbHelper;
-import com.digzdigital.divinitytoday.data.db.PaperDbHelper;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -30,12 +27,5 @@ public class AppModule {
     @Singleton
     public Application providesApplication() {
         return app;
-    }
-
-
-    @Provides
-    @Singleton
-    public DbHelper providesDbHelper() {
-        return new PaperDbHelper();
     }
 }

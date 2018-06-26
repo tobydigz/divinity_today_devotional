@@ -1,19 +1,20 @@
 package com.digzdigital.divinitytoday.data.devotionals.local
 
-import com.digzdigital.divinitytoday.data.commons.Mapper
 import com.digzdigital.divinitytoday.data.devotionals.DevotionalDataSource
+import com.digzdigital.divinitytoday.data.devotionals.local.mapper.DevotionalRealmToDevotionalMapper
 import com.digzdigital.divinitytoday.data.devotionals.local.model.DevotionalRealm
 import com.digzdigital.divinitytoday.data.model.Devotional
 import io.reactivex.Single
 import io.realm.Realm
 import io.realm.Sort
+import javax.inject.Inject
 
-class LocalDevotionalDataSource constructor(private val mapper: Mapper<DevotionalRealm, Devotional>) : DevotionalDataSource {
+class LocalDevotionalDataSource @Inject constructor(private val mapper: DevotionalRealmToDevotionalMapper,
+                                                    private val realm: Realm) : DevotionalDataSource {
 
     override fun getDevotionals(startFrom: String, size: String) = Single.just(findDevotionals())
 
     private fun findDevotionals(): List<Devotional> {
-        val realm = Realm.getDefaultInstance()
         val devotionalRealmList = realm.where(DevotionalRealm::class.java)
                 .equalTo("isFavorite", true)
                 .sort("id", Sort.DESCENDING)
@@ -25,7 +26,6 @@ class LocalDevotionalDataSource constructor(private val mapper: Mapper<Devotiona
     override fun getBookmarkedDevotionals() = Single.just(findFavoriteDevotionals())
 
     private fun findFavoriteDevotionals(): List<Devotional> {
-        val realm = Realm.getDefaultInstance()
         val devotionalRealmList = realm.where(DevotionalRealm::class.java)
                 .equalTo("isFavorite", true)
                 .sort("id", Sort.DESCENDING)
@@ -38,7 +38,6 @@ class LocalDevotionalDataSource constructor(private val mapper: Mapper<Devotiona
 
     private fun findDevotional(id: String): Single<Devotional> {
         return Single.create { emitter ->
-            val realm = Realm.getDefaultInstance()
             val devotionalRealm = realm.where(DevotionalRealm::class.java)
                     .equalTo("id", id)
                     .findFirst()

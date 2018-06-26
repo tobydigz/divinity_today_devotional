@@ -5,8 +5,6 @@ import io.paperdb.Paper
 import io.reactivex.Single
 
 class PaperDbHelper() {
-
-
     fun queryForPosts(): Single<List<Devotional>> {
         return Single.create { subscriber ->
             val allKeys = Paper.book().allKeys

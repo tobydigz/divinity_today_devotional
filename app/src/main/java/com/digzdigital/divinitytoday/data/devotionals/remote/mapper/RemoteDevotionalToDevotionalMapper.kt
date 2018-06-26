@@ -4,8 +4,9 @@ import com.digzdigital.divinitytoday.data.commons.Mapper
 import com.digzdigital.divinitytoday.data.commons.ModelExtension
 import com.digzdigital.divinitytoday.data.model.Devotional
 import com.digzdigital.divinitytoday.data.model.RemoteDevotional
+import javax.inject.Inject
 
-class RemoteDevotionalToDevotionalMapper : Mapper<RemoteDevotional, Devotional> {
+class RemoteDevotionalToDevotionalMapper @Inject constructor() : Mapper<RemoteDevotional, Devotional> {
 
     override fun map1(from: RemoteDevotional) = Devotional(
             id = from.id,
