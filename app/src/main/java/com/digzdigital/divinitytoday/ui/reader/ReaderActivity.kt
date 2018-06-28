@@ -2,6 +2,7 @@ package com.digzdigital.divinitytoday.ui.reader
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import android.widget.Toast
 import com.digzdigital.divinitytoday.DivinityTodayApp
 import com.digzdigital.divinitytoday.R
@@ -23,6 +24,7 @@ class ReaderActivity : AppCompatActivity(), ReaderContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reader)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val devotionalId = intent.getStringExtra(DEVOTIONAL_ID)
 
@@ -59,5 +61,15 @@ class ReaderActivity : AppCompatActivity(), ReaderContract.View {
 
     override fun setDevotionalSavedState(isSaved: Boolean) {
         readerSave.isChecked = isSaved
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
