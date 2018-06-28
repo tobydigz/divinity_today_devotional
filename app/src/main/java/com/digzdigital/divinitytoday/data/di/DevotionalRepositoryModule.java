@@ -15,7 +15,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.realm.Realm;
 
 @Module
 public class DevotionalRepositoryModule {
@@ -30,8 +29,8 @@ public class DevotionalRepositoryModule {
     @Provides
     @Singleton
     @Local
-    DevotionalDataSource providesLocalDataSource(Realm realm, DevotionalRealmToDevotionalMapper mapper) {
-        return new LocalDevotionalDataSource(mapper, realm);
+    DevotionalDataSource providesLocalDataSource(DevotionalRealmToDevotionalMapper mapper) {
+        return new LocalDevotionalDataSource(mapper);
     }
 
     @Provides

@@ -9,12 +9,12 @@ import io.realm.Realm
 import io.realm.Sort
 import javax.inject.Inject
 
-class LocalDevotionalDataSource @Inject constructor(private val mapper: DevotionalRealmToDevotionalMapper,
-                                                    private val realm: Realm) : DevotionalDataSource {
+class LocalDevotionalDataSource @Inject constructor(private val mapper: DevotionalRealmToDevotionalMapper) : DevotionalDataSource {
 
     override fun getDevotionals(startFrom: String, size: String) = Single.just(findDevotionals())
 
     private fun findDevotionals(): List<Devotional> {
+        val realm = Realm.getDefaultInstance()
         val devotionalRealmList = realm.where(DevotionalRealm::class.java)
                 .sort("id", Sort.DESCENDING)
                 .findAll()
@@ -25,6 +25,7 @@ class LocalDevotionalDataSource @Inject constructor(private val mapper: Devotion
     override fun getBookmarkedDevotionals() = Single.just(findFavoriteDevotionals())
 
     private fun findFavoriteDevotionals(): List<Devotional> {
+        val realm = Realm.getDefaultInstance()
         val devotionalRealmList = realm.where(DevotionalRealm::class.java)
                 .equalTo("isBookmarked", true)
                 .sort("id", Sort.DESCENDING)
@@ -37,6 +38,7 @@ class LocalDevotionalDataSource @Inject constructor(private val mapper: Devotion
 
     private fun findDevotional(id: String): Single<Devotional> {
         return Single.create { emitter ->
+            val realm = Realm.getDefaultInstance()
             val devotionalRealm = realm.where(DevotionalRealm::class.java)
                     .equalTo("id", id)
                     .findFirst()
