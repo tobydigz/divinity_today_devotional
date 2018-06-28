@@ -59,13 +59,13 @@ class SplashActivity : AppCompatActivity() {
 
 
     private fun doMigration() {
-        val disposable = Observable.just(1)
+        val disposable = migration.doMigration()
                 .doOnSubscribe {
                     splash_image.visibility = View.GONE
                     operation_layout.visibility = View.VISIBLE
                 }
                 .subscribeBy(
-                        onComplete = {
+                        onSuccess = {
                             sessionManager.setMigrationAsDone()
                             val intent = Intent(this, MainActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
