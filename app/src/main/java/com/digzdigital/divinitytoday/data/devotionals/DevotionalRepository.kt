@@ -3,6 +3,7 @@ package com.digzdigital.divinitytoday.data.devotionals
 import com.digzdigital.divinitytoday.dagger.annotations.Local
 import com.digzdigital.divinitytoday.dagger.annotations.Remote
 import com.digzdigital.divinitytoday.data.model.Devotional
+import com.digzdigital.divinitytoday.data.session.SessionManager
 import io.reactivex.Single
 import java.util.LinkedHashMap
 import javax.inject.Inject
@@ -11,7 +12,8 @@ import kotlin.collections.set
 
 class DevotionalRepository @Inject constructor(@Local private val localDataSource: DevotionalDataSource,
                                                @Remote private val remoteDataSource: DevotionalDataSource,
-                                               @Local private val localDataPersistence: DevotionalDataPersistence) {
+                                               @Local private val localDataPersistence: DevotionalDataPersistence,
+                                               private val sessionManager: SessionManager) {
 
     private val inMemoryDataSource: MutableMap<String, Devotional> = LinkedHashMap()
     private var refresh = false
@@ -24,6 +26,11 @@ class DevotionalRepository @Inject constructor(@Local private val localDataSourc
             return remoteSource
         }
 
+        if (sessionManager.isFirstLoad()) {
+            return remoteSource
+                    .doAfterSuccess { sessionManager.setFirstLoad() }
+        }
+
         if (!inMemoryDataSource.isEmpty()) {
             return getInMemoryDevotionals()
         }
@@ -33,7 +40,7 @@ class DevotionalRepository @Inject constructor(@Local private val localDataSourc
         return Single.concat(
                 localSource,
                 remoteSource)
-                .filter { it.isEmpty() }
+                .filter { !it.isEmpty() }
                 .firstOrError()
 
     }

@@ -6,14 +6,14 @@ import com.digzdigital.divinitytoday.data.model.Devotional
 import io.realm.Realm
 import javax.inject.Inject
 
-class LocalDevotionalDataPersistence @Inject constructor(private val realm: Realm) : DevotionalDataPersistence {
+class LocalDevotionalDataPersistence @Inject constructor() : DevotionalDataPersistence {
 
     override fun save(devotional: Devotional) {
-
-        realm.executeTransaction { findOrCreateDevotional(devotional) }
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction { findOrCreateDevotional(devotional, realm) }
     }
 
-    private fun findOrCreateDevotional(devotional: Devotional): DevotionalRealm {
+    private fun findOrCreateDevotional(devotional: Devotional, realm: Realm): DevotionalRealm {
         var devotionalRealm = realm.where(DevotionalRealm::class.java)
                 .equalTo("id", devotional.id)
                 .findFirst()
@@ -31,11 +31,12 @@ class LocalDevotionalDataPersistence @Inject constructor(private val realm: Real
     }
 
     override fun addToBookmarked(devotional: Devotional) {
-        realm.executeTransaction { findAndAddToBookmarked(devotional) }
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction { findAndAddToBookmarked(devotional, realm) }
     }
 
 
-    private fun findAndAddToBookmarked(devotional: Devotional): DevotionalRealm {
+    private fun findAndAddToBookmarked(devotional: Devotional, realm: Realm): DevotionalRealm {
         var devotionalRealm = realm.where(DevotionalRealm::class.java)
                 .equalTo("id", devotional.id)
                 .findFirst()
@@ -54,10 +55,11 @@ class LocalDevotionalDataPersistence @Inject constructor(private val realm: Real
     }
 
     override fun removeFromBookmarked(devotionalId: String) {
-        realm.executeTransaction { findAndRemoveFromBookmarked(devotionalId) }
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction { findAndRemoveFromBookmarked(devotionalId, realm) }
     }
 
-    private fun findAndRemoveFromBookmarked(devotionalId: String) {
+    private fun findAndRemoveFromBookmarked(devotionalId: String, realm: Realm) {
         val devotionalRealm: DevotionalRealm? = realm.where(DevotionalRealm::class.java)
                 .equalTo("id", devotionalId)
                 .findFirst() ?: return

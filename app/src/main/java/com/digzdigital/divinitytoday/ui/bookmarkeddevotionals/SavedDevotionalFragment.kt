@@ -69,11 +69,9 @@ class SavedDevotionalFragment : Fragment(), SavedDevotionalContract.View, Devoti
     }
 
     override fun showProgressDialog() {
-        progress_bar.visibility = View.VISIBLE
     }
 
     override fun dismissProgressDialog() {
-        progress_bar.visibility = View.GONE
     }
 
     override fun makeToast(message: String) {

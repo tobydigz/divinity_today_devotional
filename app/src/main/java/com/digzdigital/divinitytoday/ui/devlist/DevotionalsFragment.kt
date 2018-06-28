@@ -31,7 +31,6 @@ class DevotionalsFragment : Fragment(), DevListContract.View, DevotionalClickLis
 
     @Inject
     lateinit var presenter: DevotionalsPresenter
-    lateinit var progressDialog: ProgressDialog
     private val adapter: DevotionalAdapter by lazy {
         DevotionalAdapter(this)
     }
@@ -112,16 +111,11 @@ class DevotionalsFragment : Fragment(), DevListContract.View, DevotionalClickLis
     }
 
     override fun showProgressDialog() {
-        progressDialog = ProgressDialog(context)
-        progressDialog.apply {
-            setTitle("Loading")
-            setMessage("Please wait...")
-            show()
-        }
+
     }
 
     override fun dismissProgressDialog() {
-        progressDialog.dismiss()
+
     }
 
     override fun makeToast(message: String) {

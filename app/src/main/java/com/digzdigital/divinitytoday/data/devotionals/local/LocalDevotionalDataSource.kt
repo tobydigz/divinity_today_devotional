@@ -16,7 +16,6 @@ class LocalDevotionalDataSource @Inject constructor(private val mapper: Devotion
 
     private fun findDevotionals(): List<Devotional> {
         val devotionalRealmList = realm.where(DevotionalRealm::class.java)
-                .equalTo("isFavorite", true)
                 .sort("id", Sort.DESCENDING)
                 .findAll()
 
@@ -27,7 +26,7 @@ class LocalDevotionalDataSource @Inject constructor(private val mapper: Devotion
 
     private fun findFavoriteDevotionals(): List<Devotional> {
         val devotionalRealmList = realm.where(DevotionalRealm::class.java)
-                .equalTo("isFavorite", true)
+                .equalTo("isBookmarked", true)
                 .sort("id", Sort.DESCENDING)
                 .findAll()
 

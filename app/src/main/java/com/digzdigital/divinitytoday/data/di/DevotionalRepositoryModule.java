@@ -37,7 +37,7 @@ public class DevotionalRepositoryModule {
     @Provides
     @Singleton
     @Local
-    DevotionalDataPersistence providesLocalDataPersistence(Realm realm) {
-        return new LocalDevotionalDataPersistence(realm);
+    DevotionalDataPersistence providesLocalDataPersistence() {
+        return new LocalDevotionalDataPersistence();
     }
 }
