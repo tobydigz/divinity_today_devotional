@@ -38,7 +38,3 @@ data class Devotional(val id: String,
         return result
     }
 }
-
-data class DevotionalAd(val ad: NativeExpressAdView) : ViewType {
-    override fun getViewType() = AdapterConstants.AD
-}

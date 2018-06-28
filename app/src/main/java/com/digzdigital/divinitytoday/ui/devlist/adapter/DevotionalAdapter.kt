@@ -8,7 +8,6 @@ import com.digzdigital.divinitytoday.commons.adapter.AdapterConstants
 import com.digzdigital.divinitytoday.commons.adapter.ViewType
 import com.digzdigital.divinitytoday.commons.adapter.ViewTypeDelegateAdapter
 import com.digzdigital.divinitytoday.data.model.Devotional
-import com.digzdigital.divinitytoday.data.model.DevotionalAd
 
 class DevotionalAdapter(myClickListener: DevotionalClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -21,7 +20,6 @@ class DevotionalAdapter(myClickListener: DevotionalClickListener) : RecyclerView
     init {
         delegateAdapters.put(AdapterConstants.LOADING, LoadingDelegateAdapter())
         delegateAdapters.put(AdapterConstants.DEVOTIONAL, DevotionalDelegateAdapter(myClickListener))
-        delegateAdapters.put(AdapterConstants.AD, AdDelegateAdapter())
         items = java.util.ArrayList()
         items.add(loadingItem)
     }
@@ -52,11 +50,6 @@ class DevotionalAdapter(myClickListener: DevotionalClickListener) : RecyclerView
         notifyItemRangeChanged(initPosition, items.size + 1)
     }
 
-    fun addAds(position: Int, devotionalAd: DevotionalAd) {
-        items.add(position, devotionalAd)
-        notifyItemInserted(position)
-    }
-
     fun clearAndAddDevotionals(news: List<Devotional>) {
         val lastPosition = getLastPosition()
         items.clear()
@@ -74,7 +67,7 @@ class DevotionalAdapter(myClickListener: DevotionalClickListener) : RecyclerView
                 .map { it as Devotional }
     }
 
-    fun getDevotionalsCount()=getDevotionals().size
+    fun getDevotionalsCount() = getDevotionals().size
 
     private fun getLastPosition() = if (items.lastIndex == -1) 0 else items.lastIndex
 

@@ -1,11 +1,9 @@
 package com.digzdigital.divinitytoday.ui.devlist
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +13,9 @@ import com.digzdigital.divinitytoday.R
 import com.digzdigital.divinitytoday.commons.DevotionalClickListener
 import com.digzdigital.divinitytoday.commons.InfiniteScrollListener
 import com.digzdigital.divinitytoday.data.model.Devotional
-import com.digzdigital.divinitytoday.data.model.DevotionalAd
 import com.digzdigital.divinitytoday.ui.devlist.adapter.DevotionalAdapter
 import com.digzdigital.divinitytoday.ui.devlist.di.DevotionalsListPresenterModule
 import com.digzdigital.divinitytoday.ui.reader.ReaderActivity
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.NativeExpressAdView
 import kotlinx.android.synthetic.main.fragment_devotionals.*
 import xyz.digzdigital.keddit.commons.extensions.inflate
 import javax.inject.Inject
@@ -34,14 +27,6 @@ class DevotionalsFragment : Fragment(), DevListContract.View, DevotionalClickLis
     private val adapter: DevotionalAdapter by lazy {
         DevotionalAdapter(this)
     }
-    private val ITEMS_PER_AD = 4
-    private var AD_ID = "ca-app-pub-6610707566113750/5094407226"
-    val adSize by lazy {
-        val scale: Float = resources.displayMetrics.density
-        val adWidth = devotionalsList.width
-        AdSize((adWidth / scale).toInt(), 100)
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,42 +59,6 @@ class DevotionalsFragment : Fragment(), DevListContract.View, DevotionalClickLis
         presenter.loadDevotionals()
     }
 
-    private fun addNativeExpressAds(start: Int) {
-        val size = adapter.itemCount
-        for (i in start..size step ITEMS_PER_AD) {
-            val adView = NativeExpressAdView(context)
-            adView.adSize = adSize
-            adView.adUnitId = AD_ID
-            val devotionalAd = DevotionalAd(adView)
-            adapter.addAds(i, devotionalAd)
-        }
-        loadNativeExpressAd(start)
-    }
-
-    private fun loadNativeExpressAd(index: Int) {
-        if (index >= adapter.itemCount) return
-
-        val item = adapter.items[index]
-        when (item) {
-            is DevotionalAd -> {
-                val adView = item.ad
-                adView.adListener = object : AdListener() {
-                    override fun onAdLoaded() {
-                        super.onAdLoaded()
-                        loadNativeExpressAd(index + ITEMS_PER_AD)
-                    }
-
-                    override fun onAdFailedToLoad(errorCode: Int) {
-                        Log.e("MainActivity", "The previous Native Express ad failed to load. Attempting to" + " load the next Native Express ad in the items list.")
-                        loadNativeExpressAd(index + ITEMS_PER_AD)
-                    }
-                }
-                adView.loadAd(AdRequest.Builder().build())
-            }
-            else -> loadNativeExpressAd(index + 1)
-        }
-    }
-
     override fun showProgressDialog() {
 
     }
@@ -129,9 +78,7 @@ class DevotionalsFragment : Fragment(), DevListContract.View, DevotionalClickLis
 
     override fun showDevotionalsAndAds(devotionals: List<Devotional>) {
         if (devotionals.isEmpty()) return
-        val size = adapter.itemCount
         adapter.clearAndAddDevotionals(devotionals)
-        addNativeExpressAds(size)
     }
 
     override fun showMoreDevotionals(devotionals: List<Devotional>) {
