@@ -19,12 +19,12 @@ public class DivinityTodayApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .schemaVersion(Constants.REALM_SCHEMA_VERSION)
                 .name("divinity_today")
                 .build();
         Realm.setDefaultConfiguration(config);
-        Realm.init(this);
         Paper.init(this);
         getAppComponent();
     }
