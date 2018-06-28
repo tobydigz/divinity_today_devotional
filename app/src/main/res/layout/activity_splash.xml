@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/blue_bg"
+    tools:context=".ui.splash.SplashActivity">
+
+    <ImageView
+        android:id="@+id/splash_image"
+        android:layout_width="120dp"
+        android:layout_height="150dp"
+        android:src="@mipmap/divinity_logo"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:id="@+id/operation_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ProgressBar
+            android:id="@+id/operation_progress"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <TextView
+            android:id="@+id/operation_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data Migration in progress..."
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+</FrameLayout>

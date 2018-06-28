@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/no_devotional_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <android.support.v7.widget.RecyclerView
+        android:layout_height="wrap_content"
+        android:background="#494949"
+        android:padding="8dp"
+        android:text="You have No  Saved Devotionals"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:ignore="HardcodedText"
+        tools:visibility="visible" />
 
-            android:id="@+id/devotionalsList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
-    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/devotionalsList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

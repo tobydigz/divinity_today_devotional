@@ -1,21 +1,27 @@
 package com.digzdigital.divinitytoday.dagger;
 
-import com.digzdigital.divinitytoday.ui.devlist.DevotionalsFragment;
-import com.digzdigital.divinitytoday.ui.reader.ReaderFragment;
-import com.digzdigital.divinitytoday.ui.saveddevlist.SavedDevotionalFragment;
+import com.digzdigital.divinitytoday.data.di.DataModule;
+import com.digzdigital.divinitytoday.data.di.DevotionalRepositoryModule;
+import com.digzdigital.divinitytoday.ui.bookmarkeddevotionals.di.SavedDevotionalsListComponent;
+import com.digzdigital.divinitytoday.ui.bookmarkeddevotionals.di.SavedDevotionalsListPresenterModule;
+import com.digzdigital.divinitytoday.ui.devlist.di.DevotionalsListComponent;
+import com.digzdigital.divinitytoday.ui.devlist.di.DevotionalsListPresenterModule;
+import com.digzdigital.divinitytoday.ui.reader.di.ReaderComponent;
+import com.digzdigital.divinitytoday.ui.reader.di.ReaderPresenterModule;
+import com.digzdigital.divinitytoday.ui.splash.SplashActivity;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
 
 @Singleton
-@Component(modules = {AppModule.class})
+@Component(modules = {AppModule.class, DataModule.class, DevotionalRepositoryModule.class})
 public interface AppComponent {
-    void inject(ReaderFragment target);
+    ReaderComponent plus(ReaderPresenterModule module);
 
-    void inject(SavedDevotionalFragment target);
+    SavedDevotionalsListComponent plus(SavedDevotionalsListPresenterModule module);
 
-    void inject(DevotionalsFragment target);
+    DevotionalsListComponent plus(DevotionalsListPresenterModule module);
 
-
+    void inject(SplashActivity activity);
 }
