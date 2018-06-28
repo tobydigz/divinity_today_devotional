@@ -64,7 +64,11 @@ class SavedDevotionalFragment : Fragment(), SavedDevotionalContract.View, Devoti
     }
 
     override fun showDevotionals(devotionals: List<Devotional>) {
-        if (devotionals.isEmpty()) return
+        if (devotionals.isEmpty()) {
+            no_devotional_text.visibility = View.VISIBLE
+            return
+        }
+        no_devotional_text.visibility = View.GONE
         adapter.addDevotionals(devotionals)
     }
 
