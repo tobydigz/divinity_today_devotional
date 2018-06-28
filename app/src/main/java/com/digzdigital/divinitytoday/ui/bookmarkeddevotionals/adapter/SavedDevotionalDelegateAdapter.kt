@@ -27,7 +27,6 @@ class SavedDevotionalDelegateAdapter(val myClickListener: DevotionalClickListene
         fun bind(item: Devotional) = with(itemView) {
             dev_title.text = item.title
             dev_date.text = item.date
-            dev_bookmark.isChecked = item.bookmarked
             dev_bookmark.setOnClickListener { myClickListener.onBookmarkClick(item) }
             itemView.setOnClickListener { myClickListener.onItemClick(item) }
         }

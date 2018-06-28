@@ -16,6 +16,7 @@ class ReaderActivity : AppCompatActivity(), ReaderContract.View {
 
     @Inject
     lateinit var presenter: ReaderPresenter
+    private var isSaved = false
 
     companion object {
         const val DEVOTIONAL_ID = "devotional"
@@ -51,8 +52,9 @@ class ReaderActivity : AppCompatActivity(), ReaderContract.View {
         readerDate.text = devotional.date
         readerContent.text = devotional.content
         readerSave.isChecked = devotional.bookmarked
+        isSaved = devotional.bookmarked
         readerSave.setOnClickListener {
-            if (readerSave.isChecked)
+            if (isSaved)
                 presenter.removeDevotionalFromBookmarks(devotional)
             else
                 presenter.bookmarkDevotional(devotional)
@@ -61,6 +63,7 @@ class ReaderActivity : AppCompatActivity(), ReaderContract.View {
 
     override fun setDevotionalSavedState(isSaved: Boolean) {
         readerSave.isChecked = isSaved
+        this.isSaved = isSaved
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
