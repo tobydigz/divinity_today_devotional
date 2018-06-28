@@ -6,16 +6,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class ReaderPresenter(private val repository: DevotionalRepository) : ReaderContract.Presenter {
+class ReaderPresenter @Inject constructor(private val repository: DevotionalRepository) : ReaderContract.Presenter {
     private lateinit var view: ReaderContract.View
     private val compositeDisposable = CompositeDisposable()
+
     override fun onAttach(view: ReaderContract.View) {
         this.view = view
     }
 
     override fun onDetach() {
-
+        compositeDisposable.clear()
     }
 
     override fun bookmarkDevotional(devotional: Devotional) {

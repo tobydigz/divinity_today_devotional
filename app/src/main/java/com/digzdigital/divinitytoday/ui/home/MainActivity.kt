@@ -12,37 +12,34 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import com.digzdigital.divinitytoday.R
-import com.digzdigital.divinitytoday.commons.OnDevotionalSelectedListener
-import com.digzdigital.divinitytoday.data.model.Devotional
-import com.digzdigital.divinitytoday.ui.devlist.DevotionalsFragment
-import com.digzdigital.divinitytoday.ui.reader.ReaderActivity
 import com.digzdigital.divinitytoday.ui.bookmarkeddevotionals.SavedDevotionalFragment
+import com.digzdigital.divinitytoday.ui.devlist.DevotionalsFragment
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnDevotionalSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var fragmentManager: FragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         fragmentManager = supportFragmentManager
 
-        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         val toggle = ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer.setDrawerListener(toggle)
         toggle.syncState()
 
-        val navigationView = findViewById(R.id.nav_view) as NavigationView
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
         switchFragment(DevotionalsFragment())
     }
 
     override fun onBackPressed() {
-        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
         } else {
@@ -56,7 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    fun switchFragment(fragment: Fragment) {
+    private fun switchFragment(fragment: Fragment) {
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, fragment)
                 .commit()
@@ -84,17 +81,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         } else if (id == R.id.nav_saved) {
             switchFragment(SavedDevotionalFragment())
         }
-        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         drawer.closeDrawer(GravityCompat.START)
         return true
-    }
-
-    override fun onDevotionalSelected(devotional: Devotional, isOnline:Boolean) {
-//        Toast.makeText(this, "${devotional.title} is selected", Toast.LENGTH_SHORT).show()
-         val fragment = ReaderActivity.newInstance(devotional, isOnline)
-         fragmentManager.beginTransaction()
-                 .replace(R.id.content_frame, fragment)
-                 .addToBackStack(null)
-                 .commit()
     }
 }

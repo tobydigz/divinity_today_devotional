@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.digzdigital.divinitytoday.DivinityTodayApp
 import com.digzdigital.divinitytoday.R
 import com.digzdigital.divinitytoday.data.model.Devotional
+import com.digzdigital.divinitytoday.ui.reader.di.ReaderPresenterModule
 import kotlinx.android.synthetic.main.activity_reader.*
 import javax.inject.Inject
 
@@ -30,7 +31,10 @@ class ReaderActivity : AppCompatActivity(), ReaderContract.View {
             return
         }
 
-        (application as DivinityTodayApp).appComponent.inject(this)
+        (application as DivinityTodayApp)
+                .appComponent
+                .plus(ReaderPresenterModule(this))
+                .inject(this)
 
         presenter.onAttach(this)
         presenter.loadDevotional(devotionalId)

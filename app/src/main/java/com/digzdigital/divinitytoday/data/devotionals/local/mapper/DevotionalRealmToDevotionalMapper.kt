@@ -12,7 +12,8 @@ class DevotionalRealmToDevotionalMapper @Inject constructor() : Mapper<Devotiona
             title = from.title,
             date = from.date,
             content = from.content,
-            excerpt = from.excerpt
+            excerpt = from.excerpt,
+            bookmarked = from.bookmarked
     )
 
     override fun mapMany(fromCollection: Collection<DevotionalRealm>): Collection<Devotional> {

@@ -14,6 +14,7 @@ import com.digzdigital.divinitytoday.R
 import com.digzdigital.divinitytoday.commons.DevotionalClickListener
 import com.digzdigital.divinitytoday.data.model.Devotional
 import com.digzdigital.divinitytoday.ui.bookmarkeddevotionals.adapter.SavedDevotionalAdapter
+import com.digzdigital.divinitytoday.ui.bookmarkeddevotionals.di.SavedDevotionalsListPresenterModule
 import com.digzdigital.divinitytoday.ui.reader.ReaderActivity
 import kotlinx.android.synthetic.main.fragment_devotionals.*
 import xyz.digzdigital.keddit.commons.extensions.inflate
@@ -34,7 +35,9 @@ class SavedDevotionalFragment : Fragment(), SavedDevotionalContract.View, Devoti
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        (activity!!.application as DivinityTodayApp).appComponent.inject(this)
+        (activity!!.application as DivinityTodayApp).appComponent
+                .plus(SavedDevotionalsListPresenterModule(this))
+                .inject(this)
 
         presenter.onAttach(this)
         devotionalsList.apply {

@@ -17,6 +17,7 @@ import com.digzdigital.divinitytoday.commons.InfiniteScrollListener
 import com.digzdigital.divinitytoday.data.model.Devotional
 import com.digzdigital.divinitytoday.data.model.DevotionalAd
 import com.digzdigital.divinitytoday.ui.devlist.adapter.DevotionalAdapter
+import com.digzdigital.divinitytoday.ui.devlist.di.DevotionalsListPresenterModule
 import com.digzdigital.divinitytoday.ui.reader.ReaderActivity
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -45,7 +46,10 @@ class DevotionalsFragment : Fragment(), DevListContract.View, DevotionalClickLis
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity!!.application as DivinityTodayApp).appComponent.inject(this)
+        (activity!!.application as DivinityTodayApp)
+                .appComponent
+                .plus(DevotionalsListPresenterModule(this))
+                .inject(this)
 
         presenter.onAttach(this)
     }
