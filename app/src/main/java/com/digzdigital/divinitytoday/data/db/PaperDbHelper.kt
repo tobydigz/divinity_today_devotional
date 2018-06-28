@@ -3,8 +3,9 @@ package com.digzdigital.divinitytoday.data.db
 import com.digzdigital.divinitytoday.data.model.Devotional
 import io.paperdb.Paper
 import io.reactivex.Single
+import javax.inject.Inject
 
-class PaperDbHelper() {
+class PaperDbHelper @Inject constructor() {
     fun queryForPosts(): Single<List<Devotional>> {
         return Single.create { subscriber ->
             val allKeys = Paper.book().allKeys

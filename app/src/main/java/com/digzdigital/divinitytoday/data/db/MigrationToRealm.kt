@@ -3,9 +3,10 @@ package com.digzdigital.divinitytoday.data.db
 import com.digzdigital.divinitytoday.data.commons.ModelExtension
 import com.digzdigital.divinitytoday.data.devotionals.local.LocalDevotionalDataPersistence
 import com.digzdigital.divinitytoday.data.model.Devotional
+import javax.inject.Inject
 
-class MigrationToRealm(private val dataPersistence: LocalDevotionalDataPersistence,
-                       private val paperDbHelper: PaperDbHelper) {
+class MigrationToRealm @Inject constructor(private val dataPersistence: LocalDevotionalDataPersistence,
+                                           private val paperDbHelper: PaperDbHelper) {
 
     fun doMigration() {
         paperDbHelper.queryForPosts()
