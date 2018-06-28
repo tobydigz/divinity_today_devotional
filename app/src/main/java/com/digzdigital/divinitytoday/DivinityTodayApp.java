@@ -26,9 +26,9 @@ public class DivinityTodayApp extends Application {
 
     public AppComponent getAppComponent() {
         if (appComponent == null){
-//            appComponent = DaggerAppComponent.builder()
-//                    .appModule(new AppModule(this))
-//                    .build();
+            appComponent = DaggerAppComponent.builder()
+                    .appModule(new AppModule(this))
+                    .build();
         }
         return appComponent;
     }
