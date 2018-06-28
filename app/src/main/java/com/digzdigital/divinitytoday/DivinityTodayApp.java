@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.digzdigital.divinitytoday.commons.Constants;
 import com.digzdigital.divinitytoday.dagger.AppComponent;
+import com.digzdigital.divinitytoday.dagger.AppModule;
+import com.digzdigital.divinitytoday.dagger.DaggerAppComponent;
 
 import io.paperdb.Paper;
 import io.realm.Realm;
@@ -29,9 +31,9 @@ public class DivinityTodayApp extends Application {
 
     public AppComponent getAppComponent() {
         if (appComponent == null) {
-//            appComponent = DaggerAppComponent.builder()
-//                    .appModule(new AppModule(this))
-//                    .build();
+            appComponent = DaggerAppComponent.builder()
+                    .appModule(new AppModule(this))
+                    .build();
         }
         return appComponent;
     }

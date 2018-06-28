@@ -13,9 +13,11 @@ import com.digzdigital.divinitytoday.data.devotionals.remote.mapper.RemoteDevoti
 
 import javax.inject.Singleton;
 
+import dagger.Module;
 import dagger.Provides;
 import io.realm.Realm;
 
+@Module
 public class DevotionalRepositoryModule {
 
     @Provides

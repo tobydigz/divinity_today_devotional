@@ -23,7 +23,7 @@ import javax.inject.Inject
 class SavedDevotionalFragment : Fragment(), SavedDevotionalContract.View, DevotionalClickListener {
 
     @Inject
-    lateinit var presenter: SavedDevotionalContract.Presenter
+    lateinit var presenter: SavedDevotionalPresenter
     private val adapter: SavedDevotionalAdapter by lazy {
         SavedDevotionalAdapter(this)
     }
