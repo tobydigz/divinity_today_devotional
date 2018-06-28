@@ -8,6 +8,7 @@ import com.digzdigital.divinitytoday.ui.devlist.di.DevotionalsListComponent;
 import com.digzdigital.divinitytoday.ui.devlist.di.DevotionalsListPresenterModule;
 import com.digzdigital.divinitytoday.ui.reader.di.ReaderComponent;
 import com.digzdigital.divinitytoday.ui.reader.di.ReaderPresenterModule;
+import com.digzdigital.divinitytoday.ui.splash.SplashActivity;
 
 import javax.inject.Singleton;
 
@@ -22,5 +23,5 @@ public interface AppComponent {
 
     DevotionalsListComponent plus(DevotionalsListPresenterModule module);
 
-
+    void inject(SplashActivity activity);
 }

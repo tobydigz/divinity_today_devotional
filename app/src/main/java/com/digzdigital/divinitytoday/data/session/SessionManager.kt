@@ -5,17 +5,15 @@ import javax.inject.Inject
 
 class SessionManager @Inject constructor(private val preferences: SharedPreferences) {
 
-    fun isRealmDbInUse() {
-        preferences.getBoolean(REALM_DB, false)
-    }
+    fun shouldDoMigration()= preferences.getBoolean(migrate_db, false)
 
-    fun setRealmDbAsInUse() {
+    fun setMigrationAsDone() {
         preferences.edit()
-                .putBoolean(REALM_DB, true)
+                .putBoolean(migrate_db, true)
                 .apply()
     }
 
     companion object {
-        private const val REALM_DB = "realm_db"
+        private const val migrate_db = "migrate_db"
     }
 }
