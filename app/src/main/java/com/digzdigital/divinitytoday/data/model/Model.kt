@@ -2,7 +2,6 @@ package com.digzdigital.divinitytoday.data.model
 
 import com.digzdigital.divinitytoday.commons.adapter.AdapterConstants
 import com.digzdigital.divinitytoday.commons.adapter.ViewType
-import com.google.android.gms.ads.NativeExpressAdView
 import com.squareup.moshi.Json
 
 data class RemoteDevotional(@Json(name = "id") val id: String,
@@ -32,9 +31,6 @@ data class Devotional(val id: String,
         var result = id.hashCode()
         result = 31 * result + title.hashCode()
         result = 31 * result + date.hashCode()
-        result = 31 * result + content.hashCode()
-        result = 31 * result + excerpt.hashCode()
-        result = 31 * result + bookmarked.hashCode()
         return result
     }
 }
