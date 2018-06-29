@@ -3,6 +3,9 @@ package com.digzdigital.divinitytoday.ui.reader
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.view.animation.Animation
+import android.view.animation.BounceInterpolator
+import android.view.animation.ScaleAnimation
 import android.widget.Toast
 import com.digzdigital.divinitytoday.DivinityTodayApp
 import com.digzdigital.divinitytoday.R
@@ -41,6 +44,19 @@ class ReaderActivity : AppCompatActivity(), ReaderContract.View {
 
         presenter.onAttach(this)
         presenter.loadDevotional(devotionalId)
+
+        setClickListenerForAnimation()
+    }
+
+    private fun setClickListenerForAnimation() {
+        val scaleAnimation = ScaleAnimation(0.7f, 1.0f, 0.7f, 1.0f,
+                Animation.RELATIVE_TO_SELF, 0.7f, Animation.RELATIVE_TO_SELF, 0.7f)
+        scaleAnimation.duration = 500
+        val bounceInterpolator = BounceInterpolator()
+        scaleAnimation.interpolator = bounceInterpolator
+        readerSave.setOnCheckedChangeListener { buttonView, _ ->
+            buttonView.startAnimation(scaleAnimation)
+        }
     }
 
     override fun showToast(message: String) {

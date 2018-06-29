@@ -12,6 +12,7 @@ import com.digzdigital.divinitytoday.DivinityTodayApp
 import com.digzdigital.divinitytoday.R
 import com.digzdigital.divinitytoday.commons.DevotionalClickListener
 import com.digzdigital.divinitytoday.commons.InfiniteScrollListener
+import com.digzdigital.divinitytoday.commons.adapter.SimpleDividerItemDecoration
 import com.digzdigital.divinitytoday.data.model.Devotional
 import com.digzdigital.divinitytoday.ui.devlist.adapter.DevotionalAdapter
 import com.digzdigital.divinitytoday.ui.devlist.di.DevotionalsListPresenterModule
@@ -55,6 +56,7 @@ class DevotionalsFragment : Fragment(), DevListContract.View, DevotionalClickLis
             }, linearLayout))
         }
         devotionalsList.adapter = adapter
+        devotionalsList.addItemDecoration(SimpleDividerItemDecoration(context!!))
         showProgressDialog()
         presenter.loadDevotionals()
     }
