@@ -9,8 +9,7 @@
         android:name=".DivinityTodayApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:label="@string/app_name">
         <meta-data
             android:name="DATABASE"
             android:value="divinity_today.db" />
@@ -34,9 +33,13 @@
         <activity
             android:name=".ui.home.MainActivity"
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.reader.ReaderActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.reader.ReaderActivity" />
-        <activity android:name=".ui.splash.SplashActivity">
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

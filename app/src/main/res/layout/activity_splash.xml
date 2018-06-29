@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@color/blue_bg"
+    android:theme="@style/AppTheme"
     tools:context=".ui.splash.SplashActivity">
 
     <ImageView

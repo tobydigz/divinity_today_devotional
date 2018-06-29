@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.digzdigital.divinitytoday.DivinityTodayApp
 import com.digzdigital.divinitytoday.R
 import com.digzdigital.divinitytoday.commons.DevotionalClickListener
+import com.digzdigital.divinitytoday.commons.adapter.SimpleDividerItemDecoration
 import com.digzdigital.divinitytoday.data.model.Devotional
 import com.digzdigital.divinitytoday.ui.bookmarkeddevotionals.adapter.SavedDevotionalAdapter
 import com.digzdigital.divinitytoday.ui.bookmarkeddevotionals.di.SavedDevotionalsListPresenterModule
@@ -46,6 +47,7 @@ class SavedDevotionalFragment : Fragment(), SavedDevotionalContract.View, Devoti
             layoutManager = linearLayout
         }
         devotionalsList.adapter = adapter
+        devotionalsList.addItemDecoration(SimpleDividerItemDecoration(context!!))
         showProgressDialog()
         presenter.loadDevotionals()
     }

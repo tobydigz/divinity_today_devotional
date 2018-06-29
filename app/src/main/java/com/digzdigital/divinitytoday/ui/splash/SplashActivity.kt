@@ -46,7 +46,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun doCountdown() {
         val disposable = Observable.just(1)
-                .delay(1500, TimeUnit.MILLISECONDS)
+                .delay(1800, TimeUnit.MILLISECONDS)
                 .subscribeBy(
                         onComplete = {
                             val intent = Intent(this, MainActivity::class.java)

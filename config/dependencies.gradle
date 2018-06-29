@@ -9,7 +9,7 @@ ext.libraries = [
         // support libraries
         supportLibraryVersion          : "27.1.1",
         googlePlayVersion              : "11.8.0",
-        firebaseVersion                : "15.0.1",
+        firebaseVersion                : "16.0.0",
         // others
         daggerVersion                  : "2.11",
         retrofitVersion                : "2.3.0",
