@@ -14,7 +14,7 @@ data class DevotionalItem(@Json(name = "rendered") val rendered: String)
 
 data class Devotional(val id: String,
                       val title: String,
-                      val date: String,
+                      val date: Long,
                       val content: String,
                       val excerpt: String,
                       val bookmarked: Boolean) : ViewType {

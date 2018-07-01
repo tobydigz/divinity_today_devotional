@@ -7,7 +7,7 @@ public class DevotionalRealm extends RealmObject {
     @PrimaryKey
     private String id;
     private String title;
-    private String date;
+    private Long date;
     private String content;
     private String excerpt;
     private Boolean isBookmarked;
@@ -28,11 +28,11 @@ public class DevotionalRealm extends RealmObject {
         this.title = title;
     }
 
-    public String getDate() {
+    public Long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Long date) {
         this.date = date;
     }
 
