@@ -48,10 +48,12 @@ class DevotionalsPresenter @Inject constructor(private val repository: Devotiona
                 .subscribeBy(
                         onError = {
                             view.dismissProgressDialog()
+                            view.setRefreshingOff()
                             view.makeToast("There was an error loading the devotionals")
                         },
                         onSuccess = { devotionals ->
                             view.dismissProgressDialog()
+                            view.setRefreshingOff()
                             view.showMoreDevotionals(devotionals)
                         }
                 )

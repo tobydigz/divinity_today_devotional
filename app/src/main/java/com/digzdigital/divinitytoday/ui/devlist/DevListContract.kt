@@ -16,6 +16,8 @@ interface DevListContract {
         fun dismissProgressDialog()
 
         fun makeToast(message: String)
+
+        fun setRefreshingOff()
     }
 
     interface Presenter : BasePresenter<View> {

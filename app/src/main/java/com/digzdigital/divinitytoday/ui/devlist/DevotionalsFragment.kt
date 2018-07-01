@@ -59,6 +59,7 @@ class DevotionalsFragment : Fragment(), DevListContract.View, DevotionalClickLis
         devotionalsList.addItemDecoration(SimpleDividerItemDecoration(context!!))
         showProgressDialog()
         presenter.loadDevotionals()
+        swipe_refresh.setOnRefreshListener { presenter.refreshDevotionals() }
     }
 
     override fun showProgressDialog() {
@@ -96,5 +97,9 @@ class DevotionalsFragment : Fragment(), DevListContract.View, DevotionalClickLis
 
     override fun onBookmarkClick(devotional: Devotional) {
 
+    }
+
+    override fun setRefreshingOff() {
+        swipe_refresh.isRefreshing = false
     }
 }
