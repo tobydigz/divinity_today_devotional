@@ -2,10 +2,12 @@ package com.digzdigital.divinitytoday.data.devotionals
 
 import com.digzdigital.divinitytoday.dagger.annotations.Local
 import com.digzdigital.divinitytoday.dagger.annotations.Remote
+import com.digzdigital.divinitytoday.data.commons.ModelExtension
 import com.digzdigital.divinitytoday.data.model.Devotional
 import com.digzdigital.divinitytoday.data.session.SessionManager
 import io.reactivex.Single
-import java.util.LinkedHashMap
+import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.collections.set
@@ -64,6 +66,18 @@ class DevotionalRepository @Inject constructor(@Local private val localDataSourc
         return localSource
                 .onErrorResumeNext { remoteSource }
     }
+
+    fun getDevotionalForToday(): Single<Devotional> {
+        val date = ModelExtension.getDateForSearch(Date().time)
+        val remoteSource = remoteDataSource.getDevotionalByDate((date - TimeUnit.DAYS.toMillis(1)))
+                .doAfterSuccess { devotional -> inMemoryDataSource[devotional.id] = devotional }
+        val localSource = localDataSource.getDevotionalByDate(date)
+                .doAfterSuccess { devotional -> inMemoryDataSource[devotional.id] = devotional }
+
+        return localSource
+                .onErrorResumeNext { remoteSource }
+    }
+
 
     fun loadMore(startFrom: Int): Single<List<Devotional>> {
         return getAndSaveRemoteDevotionals(startFrom)

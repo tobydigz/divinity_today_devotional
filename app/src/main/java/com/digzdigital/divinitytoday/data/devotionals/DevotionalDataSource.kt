@@ -9,4 +9,6 @@ interface DevotionalDataSource {
     fun getBookmarkedDevotionals(): Single<List<Devotional>>
 
     fun getDevotional(id: String): Single<Devotional>
+
+    fun getDevotionalByDate(date:Long):Single<Devotional>
 }

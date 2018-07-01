@@ -11,9 +11,16 @@ object ModelExtension {
     fun getFormattedDate(date: String): Long {
         val dateString1 = date.replace("T", " ")
         val dateString2 = dateString1.replace("-", "/")
-        val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+        val dateFormat = SimpleDateFormat("yyyy/MM/dd")
         val convertedDate = dateFormat.parse(dateString2)
         return convertedDate.time
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getDateForSearch(date: Long): Long {
+        val dateFormat = SimpleDateFormat("yyyy/MM/dd")
+        val dateString = dateFormat.format(date)
+        return dateFormat.parse(dateString).time
     }
 
     fun getFriendlyDate(date: Long): String {
@@ -22,6 +29,19 @@ object ModelExtension {
         val year = android.text.format.DateFormat.format("yyyy", date) as String //2013
         val day = android.text.format.DateFormat.format("dd", date) as String //20
         return "$dayOfTheWeek $day $stringMonth, $year"
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getServerFormattedDate(date: Long): String {
+        val builder = StringBuilder()
+        val dateFormat = SimpleDateFormat("yyyy/MM/dd")
+        val timeFormat = SimpleDateFormat("HH:mm:ss")
+
+        builder.append(dateFormat.format(date))
+        builder.append("T")
+        builder.append(timeFormat.format(date))
+
+        return builder.toString()
     }
 
     fun getCleanedTitle(title: String): String = Jsoup.parse(title).text()

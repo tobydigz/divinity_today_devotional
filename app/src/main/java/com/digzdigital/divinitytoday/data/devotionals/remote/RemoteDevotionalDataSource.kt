@@ -1,11 +1,10 @@
 package com.digzdigital.divinitytoday.data.devotionals.remote
 
 import com.digzdigital.divinitytoday.data.commons.ApiService
-import com.digzdigital.divinitytoday.data.commons.Mapper
+import com.digzdigital.divinitytoday.data.commons.ModelExtension
 import com.digzdigital.divinitytoday.data.devotionals.DevotionalDataSource
 import com.digzdigital.divinitytoday.data.devotionals.remote.mapper.RemoteDevotionalToDevotionalMapper
 import com.digzdigital.divinitytoday.data.model.Devotional
-import com.digzdigital.divinitytoday.data.model.RemoteDevotional
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -23,6 +22,11 @@ class RemoteDevotionalDataSource @Inject constructor(private val apiService: Api
 
     override fun getDevotional(id: String): Single<Devotional> {
         return apiService.getDevotional(id)
+                .map { devotional -> mapper.map1(devotional) }
+    }
+
+    override fun getDevotionalByDate(date: Long): Single<Devotional> {
+        return apiService.getDevotional(afterDate = ModelExtension.getServerFormattedDate(date), per_page = "1")
                 .map { devotional -> mapper.map1(devotional) }
     }
 }

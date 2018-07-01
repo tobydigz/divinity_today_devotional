@@ -18,4 +18,8 @@ interface ApiService {
 
     @GET("/index.php/wp-json/wp/v2/posts/{id}")
     fun getDevotional(@Path("id") postId: String): Single<RemoteDevotional>
+
+    @GET("/index.php/wp-json/wp/v2/posts")
+    fun getDevotional(@Query("after") afterDate: String,
+                      @Query("per_page") per_page: String): Single<RemoteDevotional>
 }

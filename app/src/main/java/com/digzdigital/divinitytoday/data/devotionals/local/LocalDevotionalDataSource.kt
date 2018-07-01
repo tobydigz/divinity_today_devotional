@@ -50,4 +50,21 @@ class LocalDevotionalDataSource @Inject constructor(private val mapper: Devotion
             emitter.onSuccess(mapper.map1(devotionalRealm))
         }
     }
+
+    override fun getDevotionalByDate(date: Long)=findDevotionalByDate(date)
+
+    private fun findDevotionalByDate(date: Long): Single<Devotional> {
+        return Single.create { emitter ->
+            val realm = Realm.getDefaultInstance()
+            val devotionalRealm = realm.where(DevotionalRealm::class.java)
+                    .equalTo("date", date)
+                    .findFirst()
+            if (devotionalRealm == null) {
+                emitter.onError(Throwable("Devotional not found"))
+                return@create
+            }
+
+            emitter.onSuccess(mapper.map1(devotionalRealm))
+        }
+    }
 }
