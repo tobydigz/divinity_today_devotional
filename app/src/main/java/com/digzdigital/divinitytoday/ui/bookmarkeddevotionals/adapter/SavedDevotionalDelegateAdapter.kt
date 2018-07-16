@@ -6,6 +6,7 @@ import com.digzdigital.divinitytoday.R
 import com.digzdigital.divinitytoday.commons.DevotionalClickListener
 import com.digzdigital.divinitytoday.commons.adapter.ViewType
 import com.digzdigital.divinitytoday.commons.adapter.ViewTypeDelegateAdapter
+import com.digzdigital.divinitytoday.data.commons.ModelExtension
 import com.digzdigital.divinitytoday.data.model.Devotional
 import kotlinx.android.synthetic.main.item_saved_devotional.view.*
 import xyz.digzdigital.keddit.commons.extensions.inflate
@@ -26,7 +27,7 @@ class SavedDevotionalDelegateAdapter(val myClickListener: DevotionalClickListene
             parent.inflate(R.layout.item_saved_devotional)) {
         fun bind(item: Devotional) = with(itemView) {
             dev_title.text = item.title
-            dev_date.text = item.date
+            dev_date.text = ModelExtension.getFriendlyDate(item.date)
             dev_bookmark.setOnClickListener { myClickListener.onBookmarkClick(item) }
             itemView.setOnClickListener { myClickListener.onItemClick(item) }
         }

@@ -9,6 +9,7 @@ import android.view.animation.ScaleAnimation
 import android.widget.Toast
 import com.digzdigital.divinitytoday.DivinityTodayApp
 import com.digzdigital.divinitytoday.R
+import com.digzdigital.divinitytoday.data.commons.ModelExtension
 import com.digzdigital.divinitytoday.data.model.Devotional
 import com.digzdigital.divinitytoday.ui.reader.di.ReaderPresenterModule
 import kotlinx.android.synthetic.main.activity_reader.*
@@ -65,7 +66,7 @@ class ReaderActivity : AppCompatActivity(), ReaderContract.View {
 
     override fun showDevotional(devotional: Devotional) {
         readerTitle.text = devotional.title
-        readerDate.text = devotional.date
+        readerDate.text = ModelExtension.getFriendlyDate(devotional.date)
         readerContent.text = devotional.content
         readerSave.isChecked = devotional.bookmarked
         isSaved = devotional.bookmarked
